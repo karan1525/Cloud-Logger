@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from './graphic_elements/cloud_logo.svg';
+import image from './graphic_elements/san_jose.jpg';
+import './Header.css';
+import './Body.css';
 
 class App extends Component {
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Hello There!</h2>
+    return [
+      <div className="Header">
+        <header className="Header-banner">
+          <img src={logo} className="Header-logo" alt="logo" />
+          <h1>CLOUD LOGGER</h1>
+          <button type="button">Google Log In</button>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      </div>, 
+      <div className="Body">
+        <h1>LOG YOUR FILES.</h1>
+        <h1>GAIN INSIGHT FROM ERRORS.</h1>
+        <h2>HARDER. BETTER. FASTER. STRONGER.</h2>
+        <button type="button">SIGN UP WITH GOOGLE</button>
       </div>
-    );
+    ];
   }
 }
 
