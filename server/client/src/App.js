@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import logo from './graphic_elements/cloud_logo.svg';
-import image from './graphic_elements/san_jose.jpg';
 import './Header.css';
 import './Body.css';
 
@@ -13,7 +12,7 @@ class App extends Component {
           <h1>CLOUD LOGGER</h1>
           <button type="button">Google Log In</button>
         </header>
-      </div>, 
+      </div>,
       <div className="Body">
         <h1>LOG YOUR FILES.</h1>
         <h1>GAIN INSIGHT FROM ERRORS.</h1>
