@@ -1,0 +1,60 @@
+.Header {
+  text-align: left;
+}
+
+.Header-logo {
+  animation: App-logo-float infinite 5s linear;
+  height: 50px;
+  float: left;
+}
+
+.Header-banner {
+  height: 50px;
+  padding: 20px;
+}
+
+.Header-title {
+  font-size: 1.5em;
+}
+
+.Header h1 {
+  color: rgb(0, 191, 255);
+  font-family: "Roboto Condensed Bold Italic", Helvetica, Arial, sans-serif;
+  font-size: 2.5em;
+  position: relative;
+  left: 10px;
+  display: inline;
+}
+
+.Header button {
+  background-color: white; /* Green */
+  border: none;
+  color: dimgrey;
+  padding: 12px 27px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  position: relative;
+  float: right;
+}
+
+
+@keyframes App-logo-float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-5px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+
+@font-face {
+  font-family: "Roboto Condensed Bold Italic";
+  font-style: italic;
+  font-weight: 700;
+  src: local('Roboto Condensed Bold Italic'), local('RobotoCondensed-BoldItalic'), url("RobotoCondensed-BoldItalic.ttf") format('truetype');
+}
