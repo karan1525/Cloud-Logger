@@ -59,6 +59,3 @@ typings/
 
 # DS_Store
 .DS_Store
-
-# Secret Keys
-keys.js
