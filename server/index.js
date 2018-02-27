@@ -4,6 +4,8 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('./config/keys');
 const mongoose = require ('mongoose');
 const User = require('./models/User.js');
+const fileFunctions = require('./file/fileFunctions.js')
+const fs = require('fs');
 const app = express();
 
 //connect to mLab with mongoose
@@ -32,13 +34,22 @@ passport.use(
             instance.email = profile.emails[0].value;
             instance.imageUrl = profile.photos[0].value;
             instance.save(function (err) {
-              console.log(err);
+              if (err)
+                console.log(err);
             });
           }
         });
         }
     )
 );
+
+app.post('/test', function(req,res) {
+  fs.readFile("/Users/cdub/Desktop/test.txt", function (err, data) {
+      fileFunctions.file_upload('dummyUserId' , data)
+
+  });
+//
+});
 
 app.get(
     '/auth/google',
