@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 
 var logSchema = new Schema ({
     userId: String,
-    logfiles: Buffer,
-    numOfFiles: Number
+    logfile: Buffer
+    //numOfFiles: Number
 });
 
 var Log = mongoose.model('Log',logSchema);
