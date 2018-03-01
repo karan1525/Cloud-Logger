@@ -13,16 +13,18 @@ passport.use(
       callbackURL: '/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) => {
-      User.count({ userId: profile.id }, function(err, count) {
-        if (count == 0) {
-          var instance = new User();
-          instance.userId = profile.id;
-          instance.name = profile.displayName;
-          instance.email = profile.emails[0].value;
-          instance.imageUrl = profile.photos[0].value;
-          instance.save(function(err) {
-            if (err) console.log(err);
-          });
+      User.findOne({ userId: profile.id }).then(existingUser => {
+        if (existingUser) {
+          done(null, existingUser);
+        } else {
+          new User({
+            userId: profile.id,
+            name: profile.displayName,
+            email: profile.emails[0].value,
+            imageUrl: profile.photos[0].value
+          })
+            .save()
+            .then(user => done(null, user));
         }
       });
     }
