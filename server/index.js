@@ -21,6 +21,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
+require('./routes/fileRoutes')(app);
 
 //connect to mLab with mongoose
 mongoose.connect(keys.mongoUrl);
