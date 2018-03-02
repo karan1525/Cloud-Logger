@@ -1,13 +1,10 @@
-var mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-var Schema = mongoose.Schema;
-
-var logSchema = new Schema ({
-    userId: String,
-    logFile: Buffer
-    //numOfFiles: Number
+const logSchema = new Schema({
+  userId: String,
+  logFile: Buffer
+  //numOfFiles: Number
 });
 
-var Log = mongoose.model('Log',logSchema);
-
-module.exports = Log;
+mongoose.model('Log', logSchema);
