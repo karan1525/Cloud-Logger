@@ -35,7 +35,7 @@ passport.use(
         name: profile.displayName,
         email: profile.emails[0].value,
         imageUrl: profile.photos[0].value
-      });
+      }).save();
       done(null, user);
     }
   )
