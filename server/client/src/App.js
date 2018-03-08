@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './graphic_elements/cloud_logo.svg';
-import './Header.css';
-import './Body.css';
+import './styling/Header.css';
+import './styling/Body.css';
 
 class App extends Component {
   render() {

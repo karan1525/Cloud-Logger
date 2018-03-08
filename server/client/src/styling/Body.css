@@ -1,0 +1,64 @@
+.Body {
+  text-align: center;
+}
+
+.Body-intro {
+  font-size: large;
+  text-align: center;
+}
+
+.Body h1 {
+  font-family: 'Roboto Condensed Light';
+  color: whitesmoke;
+  font-size: 5em;
+  margin: 0;
+  padding: 0;
+}
+
+.Body h2 {
+  font-family: 'Roboto Condensed Light Italic';
+  color: whitesmoke;
+  font-size: 2em;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: url('graphic_elements/san_jose.jpg') no-repeat center center fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.Body button {
+  background-color: rgb(0, 191, 255); /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  margin-top: 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+@font-face {
+  font-family: 'Roboto Condensed Light';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Condensed Light'), local('RobotoCondensed-Light'),
+    url('RobotoCondensed-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Condensed Light Italic';
+  font-style: italic;
+  font-weight: 300;
+  src: local('Roboto Condensed Light Italic'),
+    local('RobotoCondensed-LightItalic'),
+    url('RobotoCondensed-LightItalic.ttf') format('truetype');
+}
