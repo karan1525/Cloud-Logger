@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from './graphic_elements/cloud_logo.svg';
-import './styling/Header.css';
-import './styling/Body.css';
+import logo from '../styling/graphic_elements/cloud_logo.svg';
+import '../styling/Header.css';
+import '../styling/Body.css';
 
-class App extends Component {
+class Landing extends Component {
   render() {
     return [
       <div className="Header">
@@ -23,4 +23,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Landing;
