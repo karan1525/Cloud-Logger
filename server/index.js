@@ -20,6 +20,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+require('./routes/testingRoutes')(app);
 require('./routes/authRoutes')(app);
 require('./routes/fileRoutes')(app);
 
@@ -31,3 +32,5 @@ db.on('error', console.error.bind(console, 'mLab connection error'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(5000);
+
+module.exports = app

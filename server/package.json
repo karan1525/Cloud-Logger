@@ -15,7 +15,8 @@
     "start": "node index.js",
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "jest"
   },
   "author": "Karan Bhargava",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "nodemon": "^1.14.12",
     "npm": "^5.7.1",
     "passport": "^0.4.0",
-    "passport-google-oauth20": "^1.0.0"
+    "passport-google-oauth20": "^1.0.0",
+    "supertest": "^3.0.0"
   }
 }
