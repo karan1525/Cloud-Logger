@@ -1,13 +1,14 @@
-const Log = require('.././models/Log.js');
+const mongoose = require('mongoose');
+const Log = mongoose.model('Log');
 const fs = require('fs');
 
-function file_upload(userId, file) {
-  var instance = new Log();
-  instance.userId = userId;
-  instance.logFile = file;
-  instance.save(function(err) {
-    if (err) console.log(err);
+
+function file_upload(id, file) {
+  const log = new Log({
+    userId: id,
+    logFile: file
   });
+  log.save();
 }
 
 module.exports = {

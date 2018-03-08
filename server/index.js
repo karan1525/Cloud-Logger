@@ -3,7 +3,7 @@ const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-const fileFunctions = require('./file/fileFunctions.js');
+require('./models/Log');
 require('./models/User');
 require('./services/passport');
 
