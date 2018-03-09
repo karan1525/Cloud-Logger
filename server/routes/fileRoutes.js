@@ -1,23 +1,27 @@
-const passport = require('passport');
 const fs = require('fs');
 const fileFunctions = require('../file/fileFunctions.js');
+const formidable = require('formidable');
+
 module.exports = app => {
-  app.post('/test', function(req, res) {
-   fs.readFile('/Users/cdub/Desktop/test.txt', function(err, data) {s
+  app.post('/upload', function(req, res) {
+    const form = new formidable.IncomingForm();
 
-       fileFunctions.file_upload( 'dummyName',data);
+    form.parse(req, function(err, fields, files) {
+      if (err) {
+        console.log(err.stack);
+        res.status(500).send('parsing failed');
+      }
 
-   });
+      fs.readFile(files.fileUploaded.path, function(err, data) {
+        if (err) {
+          console.log(err.stack);
+          res.status(500).send('upload failed');
+        }
 
-
+        fileFunctions.file_upload(fields.userId, data);
+      });
+    });
 
     res.status(200).send('file was uploaded');
-  });
-
-
-  app.put('/test', function(req, res){
-    console.log(req.body.message);
-    res.status(200).send(req.body);
-
   });
 };
