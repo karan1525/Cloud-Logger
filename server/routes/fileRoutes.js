@@ -24,4 +24,12 @@ module.exports = app => {
 
     res.status(200).send('file was uploaded');
   });
+
+  app.delete('/delete/file/:logId', function(req,res){
+      //if(err)res.status(500).send('file delete unsucessful')
+
+      fileFunctions.file_delete(req.params.logId);
+
+      res.status(200).send('file delete successful')
+  });
 };

@@ -10,6 +10,15 @@ function file_upload(id, file) {
   log.save();
 }
 
+function file_delete(fileId){
+  Log.findByIdAndRemove(fileId, (err, file)=>{
+    if (err) throw err;
+
+    console.log("file removed");
+
+    });
+}
+
 module.exports = {
-  file_upload,
+  file_upload, file_delete
 };
