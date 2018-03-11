@@ -7,6 +7,7 @@ import Header from './Header';
 import Landing from './Landing';
 
 const fileUpload = () => <h2>File Upload!</h2>;
+const home = () => <h2>Home</h2>;
 
 class App extends Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class App extends Component {
             <Header />
             <Route exact path="/" component={Landing} />
             <Route exact path="/upload" component={fileUpload} />
+            <Route exact path="/home" component={home} />
           </div>
         </BrowserRouter>
       </div>
