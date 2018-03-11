@@ -9,8 +9,8 @@ class Header extends Component {
         <header className="Header-banner">
           <img src={logo} className="Header-logo" alt="logo" />
           <h1>CLOUD LOGGER</h1>
-          <div class="right">
-            <a class="waves-effect waves-light btn white black-text">
+          <div className="right">
+            <a className="waves-effect waves-light btn white black-text">
               Login with Google
             </a>
           </div>
