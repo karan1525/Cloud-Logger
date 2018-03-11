@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
 import registerServiceWorker from './registerServiceWorker';
 
 import App from './components/App';
