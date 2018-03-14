@@ -17,11 +17,11 @@ function file_delete(userId, fileName) {
     (err, file) => {
       if (err) throw err;
 
-      if (file) 
+      if (file) {
         console.log("file removed");
-      else 
+      } else {
         console.log("file not found");
-      //todo: how to let frontend know theres a problem?
+      }
     }
   );
 }
@@ -33,36 +33,49 @@ function file_overwrite(userId, fileName, file) {
     (err, file) => {
       if (err) throw err;
 
-      if (file) 
+      if (file) {
         console.log("file overwrote");
-      else 
+      } else {
         console.log("file not found");
+      }
     }
   );
 }
 
 function file_find(userId, fileName, callback) {
-  Log.findOne({ userId: userId, logFileName: fileName }, (err, file) => {
-    if (err) callback(err,false);
+  Log.find({ userId: userId }, (err, files) => {
+    if (err) callback(err, false);
 
-    if (file) 
-      callback(err, true);
-    else 
-      callback(err, false);
+    if (files) {
+      if (files.length >= 2) {
+        callback(err, "maxLimit");
+      } else {
+        if (files.filter(x => x.logFileName == fileName).length >= 1) {
+          callback(err, "fileNameExist");
+        } else {
+          callback(err, "validFile");
+        }
+      }
+    } else {
+      callback(err, "validFile");
+    }
   });
 }
 
-function file_rename(userId, oldFileName, newFileName){
-  Log.findOneAndUpdate({userId: userId, logFileName: oldFileName},
-  {logFileName: newFileName},
-  (err, entry)=>{
-    if(err) throw err;
+function file_rename(userId, oldFileName, newFileName) {
+  Log.findOneAndUpdate(
+    { userId: userId, logFileName: oldFileName },
+    { logFileName: newFileName },
+    (err, entry) => {
+      if (err) throw err;
 
-    if(entry)
-      console.log("file renamed")
-    else
-      console.log("file not found")
-  });
+      if (entry) {
+        console.log("file renamed");
+      } else {
+        console.log("file not found");
+      }
+    }
+  );
 }
 
 module.exports = {
