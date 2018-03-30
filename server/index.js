@@ -3,12 +3,14 @@ const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-const fileFunctions = require('./file/fileFunctions.js');
+
+require('./models/Log');
 require('./models/User');
 require('./services/passport');
 
 const fs = require('fs');
 const app = express();
+
 
 app.use(
   cookieSession({
@@ -20,6 +22,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+require('./routes/testingRoutes')(app);
 require('./routes/authRoutes')(app);
 require('./routes/fileRoutes')(app);
 
@@ -31,3 +34,5 @@ db.on('error', console.error.bind(console, 'mLab connection error'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(5000);
+
+module.exports = app
