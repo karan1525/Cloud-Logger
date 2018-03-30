@@ -19,7 +19,7 @@
 
 .Header h1 {
   color: rgb(0, 191, 255);
-  font-family: "Roboto Condensed Bold Italic", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto Condensed Bold Italic', Helvetica, Arial, sans-serif;
   font-size: 2.5em;
   position: relative;
   left: 10px;
@@ -39,7 +39,6 @@
   float: right;
 }
 
-
 @keyframes App-logo-float {
   0% {
     transform: translatey(0px);
@@ -53,8 +52,10 @@
 }
 
 @font-face {
-  font-family: "Roboto Condensed Bold Italic";
+  font-family: 'Roboto Condensed Bold Italic';
   font-style: italic;
   font-weight: 700;
-  src: local('Roboto Condensed Bold Italic'), local('RobotoCondensed-BoldItalic'), url("RobotoCondensed-BoldItalic.ttf") format('truetype');
+  src: local('Roboto Condensed Bold Italic'),
+    local('RobotoCondensed-BoldItalic'),
+    url('RobotoCondensed-BoldItalic.ttf') format('truetype');
 }
