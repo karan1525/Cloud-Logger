@@ -1,6 +1,7 @@
 const fs = require("fs");
 const fileFunctions = require("../file/fileFunctions.js");
 const formidable = require("formidable");
+const readline = require('readline');
 
 module.exports = app => {
   //upload new file
@@ -89,8 +90,22 @@ module.exports = app => {
   app.get("/get/file/:userId/:fileName", function(req, res) {
     fileFunctions.file_get(req.params.userId, req.params.fileName, function(err, file) {
       if (err) res.status(500).send("cannot find file");
-
       res.status(200).send(file);
+    });
+  });
+
+  app.get("/analyze/file/:userId/:fileName", function(req, res) {
+    fileFunctions.file_get(req.params.userId, req.params.fileName, function(err, file) {
+      if (err) res.status(500).send("cannot find file");
+      const buffer = Buffer.from(file.logFile.data)
+
+      const strings = buffer.toString('utf8').split("\n")
+
+      for (var i = 0; i < strings.length; i++) {
+          console.log('line #: ' + i + ' ' + strings[i])
+      }
+
+      res.status(200).send(buffer.toString('utf8'));
     });
   });
 };
