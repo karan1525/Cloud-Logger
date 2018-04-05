@@ -78,10 +78,21 @@ function file_rename(userId, oldFileName, newFileName) {
   );
 }
 
+function file_getAllFiles(userId, callback){
+  Log.find({userId:userId}, (err,files)=>{
+    if(err)callback(err,null)
+
+      callback(err, files)
+
+  })
+
+}
+
 module.exports = {
   file_upload,
   file_delete,
   file_overwrite,
   file_find,
-  file_rename
+  file_rename,
+  file_getAllFiles
 };

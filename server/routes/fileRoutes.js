@@ -85,4 +85,12 @@ module.exports = app => {
 
     res.status(200).send("file delete successful");
   });
+
+  app.get("/files/:userId", function(req, res){
+    fileFunctions.file_getAllFiles(req.params.userId, function(err, data){
+      if(err) res.status(500).send("cannot find files");
+
+      res.status(200).send(data)
+    })
+  });
 };
