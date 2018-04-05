@@ -19,10 +19,9 @@ module.exports = app => {
         (err, valid) => {
           if (err) res.status(500).send("file_find error happened");
 
-          if (valid == "maxLimit"){
+          if (valid == "maxLimit") {
             res.status(500).send("user has reached a max limit");
-          }
-          else if (valid == "fileNameExist") {
+          } else if (valid == "fileNameExist") {
             res.status(500).send("fileName already exist");
           } else if (valid == "validFile") {
             fs.readFile(files.fileUploaded.path, function(err, data) {
@@ -84,5 +83,14 @@ module.exports = app => {
     fileFunctions.file_delete(req.params.userId, req.params.fileName);
 
     res.status(200).send("file delete successful");
+  });
+
+  //get file and return as JSON object
+  app.get("/get/file/:userId/:fileName", function(req, res) {
+    fileFunctions.file_get(req.params.userId, req.params.fileName, function(err, file) {
+      if (err) res.status(500).send("cannot find file");
+
+      res.status(200).send(file);
+    });
   });
 };
