@@ -105,10 +105,7 @@ module.exports = app => {
         .filter(s => s.length > 6);
       const applications = new Map();
 
-      /*[0]- exception;[1]- warn; [2]- error; [3]- fail/failure; 
-      **[4]- unauthorized; [5]- timeout; [6]- refused; 
-      **[7]- NoSuchPageException; [8]- 404; [9]- 401; [10]- 500
-      */
+   
 
       for (var i = 0; i < strings.length; i++) {
         //console.log('line #: ' + i + ' ' + strings[i])
@@ -116,42 +113,60 @@ module.exports = app => {
         //console.log(tokens[4])
 
         if (!applications.has(tokens[4])) {
-          console.log("making a new app at" + i + " " + tokens[4]);
-          applications.set(tokens[4], new Array(11).fill(0));
+
+          applications.set(tokens[4], new Map ([['exception',0], 
+                                                ['warn', 0], 
+                                                ['error',0], 
+                                                ['fail/failure',0],
+                                                ['unauthorized',0],
+                                                ['timeout',0],
+                                                ['refused',0],
+                                                ['NoSuchPageException',0],
+                                                ['404',0],
+                                                ['401',0],
+                                                ['501',0]]))
         }
 
-        const array = applications.get(tokens[4]);
-        //console.log(array)
+        const counts = applications.get(tokens[4]);
+        
         tokens.map(t => {
           //console.log(t)
           if (t.search(/exception/i) >= 0) {
-            array[0]++;
+            counts.set('exception', counts.get('exception')+1)
           } else if (t.search(/warn/i) >= 0) {
-            array[1]++;
+            counts.set('warn',counts.get('warn')+1)
           } else if (t.search(/error/i) >= 0) {
-            array[2]++;
+            counts.set('error',counts.get('error')+1)
           } else if (t.search(/fail/i) >= 0 || t.search(/failure/i) >= 0) {
-            array[3]++;
+            counts.set('fail/failure', counts.get('fail/failure')+1)
           } else if (t.search(/unauthorized/i) >= 0) {
-            array[4]++;
+            counts.set('unauthorized', counts.get('unauthorized')+1)
           } else if (t.search(/timeout/i) >= 0) {
-            array[5]++;
+            counts.set('timeout', counts.get('timeout')+1)
           } else if (t.search(/refused/i) >= 0) {
-            array[6]++;
+            counts.set('refused', counts.get('refused')+1)
           } else if (t.search(/NoSuchPageException/i) >= 0) {
-            array[7]++;
+            counts.set('NoSuchPageException', counts.get('NoSuchPageException')+1)
           } else if (t == "404") {
-            array[8]++;
+            counts.set('404', counts.get('404')+1)
           } else if (t == "401") {
-            array[9]++;
+            counts.set('401', counts.get('401')+1)
           } else if (t == "500") {
-            array[10]++;
+            counts.set('500', counts.get('500')+1)
           }
         });
       }
-      console.log(applications);
 
-      res.status(200).send(buffer.toString("utf8"));
+      const mapToObj = (aMap => {
+          const obj = {}
+          aMap.forEach((value, key)=>{obj[key] = value})
+          return obj
+      })
+
+
+      applications.forEach((value, key)=> { applications.set (key, mapToObj(value))} )
+
+      res.status(200).send(JSON.stringify(mapToObj(applications)));
     });
   });
 };
