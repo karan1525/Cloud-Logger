@@ -4,12 +4,14 @@ import '../styling/Home.css';
 
 class Home extends Component {
   render() {
-    return (
+    return [
       <div>
         <FilesList />
-        <a href="/upload">Upload File</a>
+      </div>,
+      <div style={{textAlign:"center"}}>
+        <a href="/upload"><a class="waves-effect waves-light btn-large blue" >New File</a></a>
       </div>
-    );
+    ];
   }
 }
 
