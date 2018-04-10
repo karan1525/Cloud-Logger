@@ -14,7 +14,7 @@ export const fetchFiles = () => async dispatch => {
 };
 
 export const uploadFile = (file) => async dispatch => {
-  const res = await axios.post('/api/files', file);
+  const res = await axios.post('/upload', file);
     
   dispatch({ type: UPLOAD_FILE, payload: res.data });
 }

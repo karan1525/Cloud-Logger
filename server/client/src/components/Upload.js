@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios, { post } from 'axios';
 import '../styling/Upload.css';
 
 class Upload extends Component {
@@ -8,6 +9,7 @@ class Upload extends Component {
         
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.fileUpload = this.fileUpload.bind(this);
    }
     
    handleChange(event) {
@@ -22,9 +24,23 @@ class Upload extends Component {
        if(ext != 'txt') {
           alert('Sorry, ' + ext + ' files are not accepted. Accepted files are txt only.');
        } else {
-          this.props.uploadFile(file);
+          this.fileUpload(file).then((response)=> {
+              console.log(response.data);
+          })
           alert('A file was submitted: ' + filename + 'With ext: ' + ext);
        }
+   }
+    
+   fileUpload(file) {
+       const url = '/api/upload';
+       const formData = new FormData();
+       formData.append('file', file)
+       const config = {
+           headers: {
+               'content-type': 'multipart/form-data'
+           }
+       }
+       return post(url, formData, config)
    }
     
   render() {
@@ -39,5 +55,7 @@ class Upload extends Component {
     );
   }
 }
+
+
 
 export default Upload;

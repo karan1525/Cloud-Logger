@@ -5,7 +5,7 @@ const formidable = require('formidable');
 
 module.exports = app => {
   //upload new file
-  app.post('/upload', function(req, res) {
+  app.post('/api/upload', function(req, res) {
     const form = new formidable.IncomingForm();
 
     form.parse(req, function(err, fields, files) {
@@ -14,7 +14,8 @@ module.exports = app => {
         res.status(500).send('parsing failed');
       }
 
-      fileFunctions.file_find(
+        //console.log(files.fileuploaded.name);
+        fileFunctions.file_find(
         fields.userId,
         files.fileUploaded.name,
         (err, valid) => {
