@@ -14,7 +14,7 @@ module.exports = app => {
         res.status(500).send('parsing failed');
       }
 
-        //console.log(files.fileuploaded.name);
+        //console.log(files.fileUploaded);
         fileFunctions.file_find(
         fields.userId,
         files.fileUploaded.name,

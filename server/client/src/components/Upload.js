@@ -34,12 +34,21 @@ class Upload extends Component {
    fileUpload(file) {
        const url = '/api/upload';
        const formData = new FormData();
-       formData.append('file', file)
+       formData.append('fileUploaded', file)
+       formData.append('userId', "maryJane")
        const config = {
            headers: {
                'content-type': 'multipart/form-data'
            }
        }
+        /**
+        ** testing purposes
+        ***use this loop to print out what's inside of formData 
+       for (var key of formData.entries()){
+        console.log(key[0] + ', ' + key[1]);
+       }
+       **/
+
        return post(url, formData, config)
    }
     
