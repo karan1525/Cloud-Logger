@@ -11,17 +11,17 @@ class FilesList extends Component {
     return this.props.files.reverse().map(file => {
       return (
         <div key={file._id} className="container" style={{ marginTop: '50px' }}>
-          <div class="row">
-            <div class="card blue darken-3">
-              <div class="card-content white-text">
-                <span class="card-title">{file.logFileName}</span>
+          <div className="row">
+            <div className="card blue darken-3">
+              <div className="card-content white-text">
+                <span className="card-title">{file.logFileName}</span>
                 <p>
                   I am a log file that you have uploaded. If you'd like to
                   either rename, or delete me, please click one of the links
                   below.
                 </p>
               </div>
-              <div class="card-action">
+              <div className="card-action">
                 <a href="#">Rename this file</a>
                 <a href="#">Delete </a>
               </div>
