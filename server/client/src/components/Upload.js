@@ -24,7 +24,7 @@ class Upload extends Component {
        if(ext != 'txt') {
           alert('Sorry, ' + ext + ' files are not accepted. Accepted files are txt only.');
        } else {
-          this.fileUpload(file, filename, ext)
+          this.fileUpload(file)
           // .then((response)=> {
           //   console.log("hi im here")
           //     console.log(response.data);
@@ -34,7 +34,7 @@ class Upload extends Component {
        }
    }
     
-   fileUpload(file, fileName,ext) {
+   fileUpload(file) {
        const url = '/api/upload';
        const formData = new FormData();
        formData.append('fileUploaded', file)
