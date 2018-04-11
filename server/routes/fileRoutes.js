@@ -22,9 +22,9 @@ module.exports = app => {
           if (err) res.status(500).send('file_find error happened');
 
           if (valid == 'maxLimit') {
-            res.status(500).send('user has reached a max limit');
+            res.status(400).send('user has reached a max limit')
           } else if (valid == 'fileNameExist') {
-            res.status(500).send('fileName already exist');
+            res.status(400).send('fileName already exist');
           } else if (valid == 'validFile') {
             fs.readFile(files.fileUploaded.path, function(err, data) {
               if (err) {

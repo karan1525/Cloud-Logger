@@ -24,18 +24,21 @@ class Upload extends Component {
        if(ext != 'txt') {
           alert('Sorry, ' + ext + ' files are not accepted. Accepted files are txt only.');
        } else {
-          this.fileUpload(file).then((response)=> {
-              console.log(response.data);
-          })
+          this.fileUpload(file, filename, ext)
+          // .then((response)=> {
+          //   console.log("hi im here")
+          //     console.log(response.data);
+          // })
           alert('A file was submitted: ' + filename + 'With ext: ' + ext);
+         
        }
    }
     
-   fileUpload(file) {
+   fileUpload(file, fileName,ext) {
        const url = '/api/upload';
        const formData = new FormData();
        formData.append('fileUploaded', file)
-       formData.append('userId', "maryJane")
+       formData.append('userId', "samSmith")
        const config = {
            headers: {
                'content-type': 'multipart/form-data'
@@ -49,7 +52,22 @@ class Upload extends Component {
        }
        **/
 
-       return post(url, formData, config)
+      //console.log(post(url, formData, config))
+
+       post(url, formData, config).then(function(response){
+        console.log("hi im running")
+        console.log(response.data)
+        alert('File Uploaded.')
+         
+       }).catch(function(err){
+        console.log(err.response.data)
+          if (err.response.data == 'user has reached a max limit')
+            alert('sorry you have reached your file limit.');
+          else if (err.response.data == 'fileName already exist')
+            alert('file name already exist')
+          else
+            alert('sorry! something went wrong. please try again')
+       })
    }
     
   render() {
