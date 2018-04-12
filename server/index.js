@@ -22,7 +22,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./routes/testingRoutes')(app);
 require('./routes/authRoutes')(app);
 require('./routes/fileRoutes')(app);
 

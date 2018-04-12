@@ -8,8 +8,10 @@ class Home extends Component {
       <div>
         <FilesList />
       </div>,
-      <div style={{textAlign:"center"}}>
-        <a href="/upload"><a class="waves-effect waves-light btn-large blue" >New File</a></a>
+      <div style={{ textAlign: 'center' }}>
+        <a href="/upload" className="waves-effect waves-light btn-large blue">
+          New File
+        </a>
       </div>
     ];
   }

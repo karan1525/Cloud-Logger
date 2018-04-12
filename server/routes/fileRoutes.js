@@ -14,8 +14,8 @@ module.exports = app => {
         res.status(500).send('parsing failed');
       }
 
-        //console.log(files.fileUploaded);
-        fileFunctions.file_find(
+      //console.log(files.fileUploaded);
+      fileFunctions.file_find(
         fields.userId,
         files.fileUploaded.name,
         (err, valid) => {
@@ -96,7 +96,7 @@ module.exports = app => {
   // });
 
   app.get('/api/files', requireLogin, async (req, res) => {
-    fileFunctions.file_getAllFiles('johnDoe', (err, data) => {
+    fileFunctions.file_getAllFiles(req.params.userId, (err, data) => {
       if (err) res.status(500).send('cannot find files');
 
       res.status(200).send(data);
