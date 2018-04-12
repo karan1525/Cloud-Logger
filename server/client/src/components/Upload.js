@@ -1,17 +1,36 @@
 import React, { Component } from 'react';
 import { post } from 'axios';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 import '../styling/Upload.css';
 
-class Upload extends Component {
+
+class Upload extends Component {  
+    
+    getUserId() {
+      switch (this.props.auth) {
+        case null:
+          return;
+        case false:
+          return (
+            <h2>YER NOT LOGGED IN</h2>
+          );
+        default:
+          return this.props.auth.userId;
+      }
+    }
+ 
+    
   constructor(props) {
     super(props);
-    this.state = { file: null };
+      
+    this.state = { file: null};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
   }
-
+    
   handleChange(event) {
     this.setState({ file: event.target.files[0] });
   }
@@ -38,8 +57,9 @@ class Upload extends Component {
   fileUpload(file) {
     const url = '/api/upload';
     const formData = new FormData();
+    const id = this.getUserId();   
     formData.append('fileUploaded', file);
-    formData.append('userId', 'maryJane');
+    formData.append('userId', id);
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
@@ -74,4 +94,8 @@ class Upload extends Component {
   }
 }
 
-export default Upload;
+function mapStateToProps({ auth }) {
+  return { auth };
+}
+
+export default connect(mapStateToProps, null)(Upload);
