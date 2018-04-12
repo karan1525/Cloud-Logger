@@ -13,18 +13,16 @@ class Upload extends Component {
     this.fileUpload = this.fileUpload.bind(this);
   }
 
-     getUserId() {
-      switch (this.props.auth) {
-        case null:
-          return;
-        case false:
-          return (
-            <h2>YER NOT LOGGED IN</h2>
-          );
-        default:
-          return this.props.auth.userId;   
-      }
+  getUserId() {
+    switch (this.props.auth) {
+      case null:
+        return;
+      case false:
+        return <h2>YER NOT LOGGED IN</h2>;
+      default:
+        return this.props.auth.userId;
     }
+  }
 
   handleChange(event) {
     this.setState({ file: event.target.files[0] });
@@ -54,7 +52,7 @@ class Upload extends Component {
     const formData = new FormData();
     const id = this.getUserId();
     formData.append('fileUploaded', file);
-    formData.append('userId', 'maryJane');
+    formData.append('userId', id);
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
@@ -88,7 +86,6 @@ class Upload extends Component {
     );
   }
 }
-
 
 function mapStateToProps({ auth }) {
   return { auth };
