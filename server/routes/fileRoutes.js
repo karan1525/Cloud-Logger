@@ -22,7 +22,7 @@ module.exports = app => {
           if (err) res.status(500).send('file_find error happened');
 
           if (valid == 'maxLimit') {
-            res.status(400).send('user has reached a max limit')
+            res.status(400).send('user has reached a max limit');
           } else if (valid == 'fileNameExist') {
             res.status(400).send('fileName already exist');
           } else if (valid == 'validFile') {
@@ -46,7 +46,7 @@ module.exports = app => {
   });
 
   //rename file
-  app.put('/upload/rename', function(req,res) {
+  app.put('/upload/rename', function(req, res) {
     const form = new formidable.IncomingForm();
 
     form.parse(req, function(err, fields, files) {
@@ -55,14 +55,14 @@ module.exports = app => {
         res.status(500).send('parsing failed');
       }
 
-    fileFunctions.file_rename(
-      fields.userId,
-      fields.oldFileName,
-      fields.newFileName
-    );
+      fileFunctions.file_rename(
+        fields.userId,
+        fields.oldFileName,
+        fields.newFileName
+      );
 
-    res.status(200).send('file renamed');
-  })
+      res.status(200).send('file renamed');
+    });
   });
 
   //overwrite existing file
@@ -87,19 +87,18 @@ module.exports = app => {
   });
 
   //delete existing file
-  app.delete('/file', function(req, res) {
-
-       const form = new formidable.IncomingForm();
+  app.delete('/api/delete', function(req, res) {
+    const form = new formidable.IncomingForm();
 
     form.parse(req, function(err, fields, files) {
       if (err) {
         console.log(err.stack);
         res.status(500).send('parsing failed');
       }
-    fileFunctions.file_delete(fields.userId, fields.fileName);
+      fileFunctions.file_delete(fields.userId, fields.fileName);
 
-    res.status(200).send('file delete successful');
-  })
+      res.status(200).send('file delete successful');
+    });
   });
 
   // app.get('/files/:userId', function(req, res) {
@@ -111,18 +110,10 @@ module.exports = app => {
   // });
 
   app.get('/api/files', requireLogin, async (req, res) => {
-       const form = new formidable.IncomingForm();
-
-    form.parse(req, function(err, fields, files) {
-      if (err) {
-        console.log(err.stack);
-        res.status(500).send('parsing failed');
-      }
-    fileFunctions.file_getAllFiles(fields.userId, (err, data) => {
+    fileFunctions.file_getAllFiles(req.user.userId, (err, data) => {
       if (err) res.status(500).send('cannot find files');
 
       res.status(200).send(data);
     });
-  })
   });
 };
