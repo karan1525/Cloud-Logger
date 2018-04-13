@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { post } from "axios";
-import "../styling/Upload.css";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { post } from 'axios';
+import '../styling/Upload.css';
 
 class Upload extends Component {
   constructor(props) {
@@ -32,28 +32,28 @@ class Upload extends Component {
     event.preventDefault();
     var file = this.state.file;
     var filename = this.state.file.name;
-    var ext = filename.split(".").pop();
-    if (ext !== "txt") {
+    var ext = filename.split('.').pop();
+    if (ext !== 'txt') {
       alert(
-        "Sorry, " +
+        'Sorry, ' +
           ext +
-          " files are not accepted. Accepted files are txt only."
+          ' files are not accepted. Accepted files are txt only.'
       );
     } else {
-      this.fileUpload(file)
-      alert("A file was submitted: " + filename + "With ext: " + ext);
+      this.fileUpload(file);
+      alert('A file was submitted: ' + filename + 'With ext: ' + ext);
     }
   }
 
   fileUpload(file) {
-    const url = "/api/upload" 
+    const url = '/api/upload';
     const formData = new FormData();
     const id = this.getUserId();
-    formData.append("fileUploaded", file);
-    formData.append("userId", id);
+    formData.append('fileUploaded', file);
+    formData.append('userId', id);
     const config = {
       headers: {
-        "content-type": "multipart/form-data"
+        'content-type': 'multipart/form-data'
       }
     };
     /**
@@ -64,17 +64,20 @@ class Upload extends Component {
        }
        **/
 
-    post(url, formData, config).then((res)=> {
-      alert('file successfully uploaded');
-    }).catch((err)=>{
-      if(err.response.data === 'user has reached a max limit'){
-        alert('you have reached your max file limit')
-      }else if (err.response.data === 'fileName already exist'){
-        alert('file name already exist')
-      }else {
-        alert('something went wrong! please try again!')
-      }
-    })
+    post(url, formData, config)
+      .then(res => {
+        alert('file successfully uploaded');
+      })
+      .catch(err => {
+        if (err.response.data === 'user has reached a max limit') {
+          alert('you have reached your max file limit');
+        } else if (err.response.data === 'fileName already exist') {
+          alert('file name already exist');
+        } else {
+          alert('something went wrong! please try again!');
+        }
+      });
+    window.location.href = '/home';
   }
 
   render() {
