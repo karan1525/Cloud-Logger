@@ -46,17 +46,23 @@ module.exports = app => {
   });
 
   //rename file
-  app.put('/upload/rename/:userId/:oldFileName/:newFileName', function(
-    req,
-    res
-  ) {
+  app.put('/upload/rename', function(req,res) {
+    const form = new formidable.IncomingForm();
+
+    form.parse(req, function(err, fields, files) {
+      if (err) {
+        console.log(err.stack);
+        res.status(500).send('parsing failed');
+      }
+
     fileFunctions.file_rename(
-      req.params.userId,
-      req.params.oldFileName,
-      req.params.newFileName
+      fields.userId,
+      fields.oldFileName,
+      fields.newFileName
     );
 
     res.status(200).send('file renamed');
+  })
   });
 
   //overwrite existing file
@@ -81,10 +87,19 @@ module.exports = app => {
   });
 
   //delete existing file
-  app.delete('/delete/file/:userId/:fileName', function(req, res) {
-    fileFunctions.file_delete(req.params.userId, req.params.fileName);
+  app.delete('/file', function(req, res) {
+
+       const form = new formidable.IncomingForm();
+
+    form.parse(req, function(err, fields, files) {
+      if (err) {
+        console.log(err.stack);
+        res.status(500).send('parsing failed');
+      }
+    fileFunctions.file_delete(fields.userId, fields.fileName);
 
     res.status(200).send('file delete successful');
+  })
   });
 
   // app.get('/files/:userId', function(req, res) {
@@ -96,10 +111,18 @@ module.exports = app => {
   // });
 
   app.get('/api/files', requireLogin, async (req, res) => {
-    fileFunctions.file_getAllFiles(req.params.userId, (err, data) => {
+       const form = new formidable.IncomingForm();
+
+    form.parse(req, function(err, fields, files) {
+      if (err) {
+        console.log(err.stack);
+        res.status(500).send('parsing failed');
+      }
+    fileFunctions.file_getAllFiles(fields.userId, (err, data) => {
       if (err) res.status(500).send('cannot find files');
 
       res.status(200).send(data);
     });
+  })
   });
 };
