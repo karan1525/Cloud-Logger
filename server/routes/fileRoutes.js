@@ -95,7 +95,8 @@ module.exports = app => {
         console.log(err.stack);
         res.status(500).send('parsing failed');
       }
-      fileFunctions.file_delete(fields.userId, fields.fileName);
+
+      fileFunctions.file_delete(req.user.userId, fields.fileName);
 
       res.status(200).send('file delete successful');
     });
