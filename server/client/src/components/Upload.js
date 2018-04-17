@@ -41,7 +41,7 @@ class Upload extends Component {
       );
     } else {
       this.fileUpload(file);
-      alert('A file was submitted: ' + filename + 'With ext: ' + ext);
+      alert('A file was submitted: ' + filename);
     }
   }
 

@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import RenameModal from './RenameModal';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { fetchFiles } from '../../actions';
 
 class FilesList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { isModalOpen: false};
+  }
+
   componentDidMount() {
     this.props.fetchFiles();
   }
@@ -18,6 +24,14 @@ class FilesList extends Component {
       console.log(response.data);
       window.location.reload();
     });
+  }
+
+  openModal() {
+    this.setState({ isModalOpen: true })
+  }
+
+  closeModal() {
+    this.setState({ isModalOpen: false })
   }
 
   renderFiles() {
@@ -35,7 +49,11 @@ class FilesList extends Component {
                 </p>
               </div>
               <div className="card-action">
-                <a href="/rename">Rename this file</a>
+                <a
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => this.openModal()}>
+                  Rename
+                </a>
                 <a
                   style={{ cursor: 'pointer' }}
                   onClick={() => this.deleteFile(file.logFileName)}>
@@ -50,7 +68,16 @@ class FilesList extends Component {
   }
 
   render() {
-    return <div>{this.renderFiles()}</div>;
+    return [
+      <div>{this.renderFiles()}</div>,
+      <div>
+        <RenameModal isOpen={this.state.isModalOpen} onClose={() => this.closeModal}>
+          <h1>Modal title</h1>
+          <p>hallo</p>
+          <p><button onClick={() => this.closeModal()}>Close</button></p>
+        </RenameModal>
+      </div>
+    ];
   }
 }
 
