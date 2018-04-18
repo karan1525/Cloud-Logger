@@ -12,9 +12,10 @@ class Modal extends React.Component {
       left: '50%',
       transform: 'translate(-50%, -50%)',
       zIndex: '9999',
-      background: '#fff',
-      maxWidth: 500,
-      minHeight: 300,
+      color: '#fff',
+      background: '#1565c0',
+      maxWidth: 700,
+      minHeight: 250,
       borderRadius: 5,
       margin: '0 auto',
       padding: 30

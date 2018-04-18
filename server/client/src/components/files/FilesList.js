@@ -102,8 +102,8 @@ class FilesList extends Component {
 
   render() {
     return [
-      <div>{this.renderFiles()}</div>,
-      <div>
+      <div key="filesRender">{this.renderFiles()}</div>,
+      <div key="renameModal">
         <RenameModal
           isOpen={this.state.isModalOpen}
           onClose={() => this.closeModal}>
@@ -115,11 +115,20 @@ class FilesList extends Component {
               newfilename={this.state.newFileName}
               onChange={this.handleModalChange}
             />
-            <input type="submit" value="Submit" />
+            <button
+              className="btn waves-effect waves-light left"
+              type="submit"
+              value="Submit">
+              Submit
+              <i className="material-icons right">done</i>
+            </button>
+            <button
+              className="btn waves-effect waves-light right red"
+              onClick={() => this.closeModal()}>
+              Cancel
+              <i className="material-icons right">cancel</i>
+            </button>
           </form>
-          <p>
-            <button onClick={() => this.closeModal()}>Cancel</button>
-          </p>
         </RenameModal>
       </div>
     ];
