@@ -92,6 +92,7 @@ class FilesList extends Component {
                   onClick={() => this.handleDelete(file.logFileName)}>
                   Delete
                 </a>
+                <a style={{ cursor: 'pointer' }}>Analyze</a>
               </div>
             </div>
           </div>
