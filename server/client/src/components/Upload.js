@@ -83,7 +83,6 @@ class Upload extends Component {
   render() {
     return (
       <div className="Upload">
-        <h2>This is the upload page.</h2>
         <form onSubmit={this.handleSubmit}>
           <input
             type="file"
@@ -91,7 +90,10 @@ class Upload extends Component {
             file={this.state.file}
             onChange={this.handleChange}
           />
-          <input type="submit" value="Upload" />
+          <button type="submit" value="Upload">
+            Upload
+            <i className="material-icons right">cloud_upload</i>
+          </button>
         </form>
       </div>
     );
