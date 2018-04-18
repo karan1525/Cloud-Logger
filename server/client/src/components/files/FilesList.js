@@ -7,7 +7,11 @@ import { fetchFiles } from '../../actions';
 class FilesList extends Component {
   constructor(props) {
     super(props);
-    this.state = { isModalOpen: false, currentFileName: null, newFileName: null };
+    this.state = {
+      isModalOpen: false,
+      currentFileName: null,
+      newFileName: null
+    };
   }
 
   componentDidMount() {
@@ -32,12 +36,15 @@ class FilesList extends Component {
 
   fileRename() {
     const url = '/api/rename';
-    var oldFileName = this.state.currentFileName;
-    var newFileName = this.state.newFileName;
+    const oldFileName = this.state.currentFileName;
+    const newFileName = this.state.newFileName;
 
     console.log(oldFileName);
     console.log(newFileName);
-    return axios.put(url, {data: { oldFileName: oldFileName, newFileName: newFileName } });
+    return axios.put(url, {
+      oldFileName: oldFileName,
+      newFileName: newFileName
+    });
   }
 
   fileDelete(fileName) {
@@ -53,11 +60,11 @@ class FilesList extends Component {
   }
 
   openModal(fileName) {
-    this.setState({ isModalOpen: true, currentFileName: fileName })
+    this.setState({ isModalOpen: true, currentFileName: fileName });
   }
 
   closeModal() {
-    this.setState({ isModalOpen: false })
+    this.setState({ isModalOpen: false });
   }
 
   renderFiles() {
@@ -97,14 +104,22 @@ class FilesList extends Component {
     return [
       <div>{this.renderFiles()}</div>,
       <div>
-        <RenameModal isOpen={this.state.isModalOpen} onClose={() => this.closeModal}>
+        <RenameModal
+          isOpen={this.state.isModalOpen}
+          onClose={() => this.closeModal}>
           <h3>Rename {this.state.currentFileName}?</h3>
           <p>Please submit a new name for this file. </p>
           <form onSubmit={this.handleModalSubmit}>
-            <input type="text" newFileName={this.state.newFileName} onChange={this.handleModalChange}/>
+            <input
+              type="text"
+              newfilename={this.state.newFileName}
+              onChange={this.handleModalChange}
+            />
             <input type="submit" value="Submit" />
           </form>
-          <p><button onClick={() => this.closeModal()}>Cancel</button></p>
+          <p>
+            <button onClick={() => this.closeModal()}>Cancel</button>
+          </p>
         </RenameModal>
       </div>
     ];

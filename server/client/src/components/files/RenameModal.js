@@ -2,7 +2,7 @@ import React from 'react';
 
 class Modal extends React.Component {
   render() {
-    if(this.props.isOpen === false) {
+    if (this.props.isOpen === false) {
       return null;
     }
 
@@ -33,16 +33,16 @@ class Modal extends React.Component {
 
     return (
       <div>
-       <div style={modalStyle}>{this.props.children}</div>
-       <div style={backdropStyle} onClick={e => this.close(e)}/>}
-     </div>
+        <div style={modalStyle}>{this.props.children}</div>
+        <div style={backdropStyle} onClick={e => this.close(e)} />}
+      </div>
     );
   }
 
   close(e) {
     e.preventDefault();
 
-    if(this.props.onClose) {
+    if (this.props.onClose) {
       this.props.onClose();
     }
   }
