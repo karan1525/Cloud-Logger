@@ -82,18 +82,41 @@ class Upload extends Component {
 
   render() {
     return (
-      <div className="Upload">
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="file"
-            size="60"
-            file={this.state.file}
-            onChange={this.handleChange}
-          />
-          <button type="submit" value="Upload">
-            Upload
-            <i className="material-icons right">cloud_upload</i>
-          </button>
+      <div
+        style={{
+          marginTop: '65px',
+          marginLeft: '100px',
+          marginRight: '100px'
+        }}
+        className="Upload">
+        <form action="#" onSubmit={this.handleSubmit}>
+          <div className="file-field input-field">
+            <div className="btn">
+              <span>File</span>
+              <input
+                type="file"
+                size="60"
+                file={this.state.file}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="file-path-wrapper">
+              <input
+                className="file-path validate"
+                type="text"
+                placeholder="Upload a new file"
+              />
+            </div>
+          </div>
+          <p className="center-align">
+            <button
+              className="waves-effect waves-light btn-large center"
+              type="submit"
+              value="Upload">
+              Upload
+              <i className="material-icons right">cloud_upload</i>
+            </button>
+          </p>
         </form>
       </div>
     );
