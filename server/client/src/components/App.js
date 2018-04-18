@@ -21,7 +21,7 @@ class App extends Component {
             <Header />
             <Route exact path="/" component={Landing} />
             <Route exact path="/upload" component={Upload} />
-            <Route exact path="/home" component={Home} />
+            <Route path="/home" component={Home} />
           </div>
         </BrowserRouter>
       </div>
