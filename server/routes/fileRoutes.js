@@ -46,7 +46,7 @@ module.exports = app => {
   });
 
   //rename file
-  app.put('/upload/rename', function(req, res) {
+  app.put('/api/rename', function(req, res) {
     const form = new formidable.IncomingForm();
 
     form.parse(req, function(err, fields, files) {
@@ -56,7 +56,7 @@ module.exports = app => {
       }
 
       fileFunctions.file_rename(
-        fields.userId,
+        req.user.userId,
         fields.oldFileName,
         fields.newFileName
       );
