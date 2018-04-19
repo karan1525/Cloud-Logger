@@ -2,6 +2,9 @@ const fs = require("fs");
 const fileFunctions = require("../file/fileFunctions.js");
 const formidable = require("formidable");
 const readline = require("readline");
+const Moment = require('moment');
+const MomentRange = require('moment-range');
+const moment = MomentRange.extendMoment(Moment); 
 
 module.exports = app => {
   //upload new file
@@ -104,13 +107,22 @@ module.exports = app => {
         .split("\n")
         .filter(s => s.length > 6);
       const applications = new Map();
+      const month = new Map ([['Jan','01'], ['Feb','02'], ['Mar','03'], 
+        ['Apr','04'], ['May','05'], ['Jun','06'], ['Jul','07'],['Aug','08'], ['Sep', '09'], 
+        ['Oct','10'], ['Nov','11'], ['Dec','12']])
+
+      const range = moment.range('2018-07-01', '2018-09-01')
 
 
-
-      for (var i = 0; i < strings.length; i++) {
+      for (var i = 0; i < 1; i++) {
         //console.log('line #: ' + i + ' ' + strings[i])
         const tokens = strings[i].split(" ");
-        //console.log(tokens[4])
+        //console.log(tokens[0]+ " "+tokens[1]+tokens[2])
+        var d = '2018-'+ month.get(tokens[0])+'-'+tokens[1]+" "+tokens[2]
+        //console.log(d)
+        const date = moment(d) 
+
+        //if (range.)
 
         if (!applications.has(tokens[4])) {
 
