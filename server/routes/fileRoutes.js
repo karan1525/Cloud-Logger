@@ -97,8 +97,8 @@ module.exports = app => {
     });
   });
 
-  app.get("/analyze/file/:userId/:fileName", function(req, res) {
-    fileFunctions.file_get(req.params.userId, req.params.fileName, function(err,file) {
+  app.post("/analyze/error", function(req, res) {
+    fileFunctions.file_get(req.body.userId, req.body.fileName, function(err,file) {
       if (err) res.status(500).send("cannot find file");
       const buffer = Buffer.from(file.logFile.data);
 
@@ -111,63 +111,67 @@ module.exports = app => {
         ['Apr','04'], ['May','05'], ['Jun','06'], ['Jul','07'],['Aug','08'], ['Sep', '09'], 
         ['Oct','10'], ['Nov','11'], ['Dec','12']])
 
-      const range = moment.range('2018-07-01', '2018-09-01')
+      const range = moment.range(req.body.start, req.body.end)
+      var year =0
 
 
-      for (var i = 0; i < 1; i++) {
-        //console.log('line #: ' + i + ' ' + strings[i])
+      for (var i = 0; i < strings.length; i++) {
+        
         const tokens = strings[i].split(" ");
+        if (i ==0) year = tokens[5].substring(0,4)
         //console.log(tokens[0]+ " "+tokens[1]+tokens[2])
-        var d = '2018-'+ month.get(tokens[0])+'-'+tokens[1]+" "+tokens[2]
+        var d = year+'-'+ month.get(tokens[0])+'-'+tokens[1]+" "+tokens[2]
         //console.log(d)
         const date = moment(d) 
+        console.log(d+ range.contains(date))
+        if (range.contains(date)){
+            if (!applications.has(tokens[4])) {
 
-        //if (range.)
+            applications.set(tokens[4], new Map ([['exception',0],
+                                                  ['warn', 0],
+                                                  ['error',0],
+                                                  ['fail/failure',0],
+                                                  ['unauthorized',0],
+                                                  ['timeout',0],
+                                                  ['refused',0],
+                                                  ['NoSuchPageException',0],
+                                                  ['404',0],
+                                                  ['401',0],
+                                                  ['501',0]]))
+          }
 
-        if (!applications.has(tokens[4])) {
+          const counts = applications.get(tokens[4]);
 
-          applications.set(tokens[4], new Map ([['exception',0],
-                                                ['warn', 0],
-                                                ['error',0],
-                                                ['fail/failure',0],
-                                                ['unauthorized',0],
-                                                ['timeout',0],
-                                                ['refused',0],
-                                                ['NoSuchPageException',0],
-                                                ['404',0],
-                                                ['401',0],
-                                                ['501',0]]))
+          tokens.map(t => {
+            //console.log(t)
+            if (t.search(/exception/i) >= 0) {
+              counts.set('exception', counts.get('exception')+1)
+            } else if (t.search(/warn/i) >= 0) {
+              counts.set('warn',counts.get('warn')+1)
+            } else if (t.search(/error/i) >= 0) {
+              counts.set('error',counts.get('error')+1)
+            } else if (t.search(/fail/i) >= 0 || t.search(/failure/i) >= 0) {
+              counts.set('fail/failure', counts.get('fail/failure')+1)
+            } else if (t.search(/unauthorized/i) >= 0) {
+              counts.set('unauthorized', counts.get('unauthorized')+1)
+            } else if (t.search(/timeout/i) >= 0) {
+              counts.set('timeout', counts.get('timeout')+1)
+            } else if (t.search(/refused/i) >= 0) {
+              counts.set('refused', counts.get('refused')+1)
+            } else if (t.search(/NoSuchPageException/i) >= 0) {
+              counts.set('NoSuchPageException', counts.get('NoSuchPageException')+1)
+            } else if (t == "404") {
+              counts.set('404', counts.get('404')+1)
+            } else if (t == "401") {
+              counts.set('401', counts.get('401')+1)
+            } else if (t == "500") {
+              counts.set('500', counts.get('500')+1)
+            }
+          });
+        }
         }
 
-        const counts = applications.get(tokens[4]);
-
-        tokens.map(t => {
-          //console.log(t)
-          if (t.search(/exception/i) >= 0) {
-            counts.set('exception', counts.get('exception')+1)
-          } else if (t.search(/warn/i) >= 0) {
-            counts.set('warn',counts.get('warn')+1)
-          } else if (t.search(/error/i) >= 0) {
-            counts.set('error',counts.get('error')+1)
-          } else if (t.search(/fail/i) >= 0 || t.search(/failure/i) >= 0) {
-            counts.set('fail/failure', counts.get('fail/failure')+1)
-          } else if (t.search(/unauthorized/i) >= 0) {
-            counts.set('unauthorized', counts.get('unauthorized')+1)
-          } else if (t.search(/timeout/i) >= 0) {
-            counts.set('timeout', counts.get('timeout')+1)
-          } else if (t.search(/refused/i) >= 0) {
-            counts.set('refused', counts.get('refused')+1)
-          } else if (t.search(/NoSuchPageException/i) >= 0) {
-            counts.set('NoSuchPageException', counts.get('NoSuchPageException')+1)
-          } else if (t == "404") {
-            counts.set('404', counts.get('404')+1)
-          } else if (t == "401") {
-            counts.set('401', counts.get('401')+1)
-          } else if (t == "500") {
-            counts.set('500', counts.get('500')+1)
-          }
-        });
-      }
+        
 
       const mapToObj = (aMap => {
           const obj = {}
@@ -183,8 +187,9 @@ module.exports = app => {
   });
 
 
-  app.get("/analyze/usage/:userId/:fileName", function(req, res) {
-    fileFunctions.file_get(req.params.userId, req.params.fileName, function(err,file) {
+  app.post("/analyze/usage", function(req, res) {
+
+    fileFunctions.file_get(req.body.userId, req.body.fileName, function(err,file) {
       if (err) res.status(500).send("cannot find file");
       const buffer = Buffer.from(file.logFile.data);
 
@@ -194,36 +199,46 @@ module.exports = app => {
         .filter(s => s.length > 6);
       const applications = new Map();
 
+      const month = new Map ([['Jan','01'], ['Feb','02'], ['Mar','03'], 
+        ['Apr','04'], ['May','05'], ['Jun','06'], ['Jul','07'],['Aug','08'], ['Sep', '09'], 
+        ['Oct','10'], ['Nov','11'], ['Dec','12']])
+      // '2017-08-19 00:00:00', '2017-08-21 00:00:00'
+      const range = moment.range(req.body.start, req.body.end)
+      var year =0
+
       for (var i = 0; i < strings.length; i++) {
         //console.log('line #: ' + i + ' ' + strings[i])
         const tokens = strings[i].split(" ");
+        if (i ==0) year = tokens[5].substring(0,4)
         //console.log(tokens[4])
+        var d = year+'-'+ month.get(tokens[0])+'-'+tokens[1]+" "+tokens[2]
+        const date = moment(d) 
+        if (range.contains(date)){
+          if (!applications.has(tokens[4])) {
 
-
-        if (!applications.has(tokens[4])) {
-
-          applications.set(tokens[4], new Map ([["DockerServerController",0],
-                                                ["DockerVolumeController", 0],
-                                                ["ProvisionController",0],
-                                                ['BlueprintController',0],
-                                                ]))
-        }
-
-        const counts = applications.get(tokens[4]);
-
-        tokens.map(t => {
-          //console.log(t)
-          if (t.search(/DockerServerController/i) >= 0) {
-            counts.set("DockerServerController", counts.get("DockerServerController")+1)
-          } else if (t.search(/DockerVolumeController/i) >= 0) {
-            counts.set("DockerVolumeController",counts.get("DockerVolumeController")+1)
-          } else if (t.search(/ProvisionController/i) >= 0) {
-            counts.set("ProvisionController",counts.get("ProvisionController")+1)
-          } else if (t.search(/BlueprintController/i) >= 0) {
-            counts.set("BlueprintController", counts.get("BlueprintController")+1)
+            applications.set(tokens[4], new Map ([["DockerServerController",0],
+                                                  ["DockerVolumeController", 0],
+                                                  ["ProvisionController",0],
+                                                  ['BlueprintController',0],
+                                                  ]))
           }
-        });
-      }
+
+          const counts = applications.get(tokens[4]);
+
+          tokens.map(t => {
+            //console.log(t)
+            if (t.search(/DockerServerController/i) >= 0) {
+              counts.set("DockerServerController", counts.get("DockerServerController")+1)
+            } else if (t.search(/DockerVolumeController/i) >= 0) {
+              counts.set("DockerVolumeController",counts.get("DockerVolumeController")+1)
+            } else if (t.search(/ProvisionController/i) >= 0) {
+              counts.set("ProvisionController",counts.get("ProvisionController")+1)
+            } else if (t.search(/BlueprintController/i) >= 0) {
+              counts.set("BlueprintController", counts.get("BlueprintController")+1)
+            }
+          });
+        }
+    }
 
       const mapToObj = (aMap => {
           const obj = {}
