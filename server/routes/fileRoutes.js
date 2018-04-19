@@ -105,7 +105,7 @@ module.exports = app => {
         .filter(s => s.length > 6);
       const applications = new Map();
 
-   
+
 
       for (var i = 0; i < strings.length; i++) {
         //console.log('line #: ' + i + ' ' + strings[i])
@@ -114,9 +114,9 @@ module.exports = app => {
 
         if (!applications.has(tokens[4])) {
 
-          applications.set(tokens[4], new Map ([['exception',0], 
-                                                ['warn', 0], 
-                                                ['error',0], 
+          applications.set(tokens[4], new Map ([['exception',0],
+                                                ['warn', 0],
+                                                ['error',0],
                                                 ['fail/failure',0],
                                                 ['unauthorized',0],
                                                 ['timeout',0],
@@ -128,7 +128,7 @@ module.exports = app => {
         }
 
         const counts = applications.get(tokens[4]);
-        
+
         tokens.map(t => {
           //console.log(t)
           if (t.search(/exception/i) >= 0) {
@@ -153,6 +153,62 @@ module.exports = app => {
             counts.set('401', counts.get('401')+1)
           } else if (t == "500") {
             counts.set('500', counts.get('500')+1)
+          }
+        });
+      }
+
+      const mapToObj = (aMap => {
+          const obj = {}
+          aMap.forEach((value, key)=>{obj[key] = value})
+          return obj
+      })
+
+
+      applications.forEach((value, key)=> { applications.set (key, mapToObj(value))} )
+
+      res.status(200).send(JSON.stringify(mapToObj(applications)));
+    });
+  });
+
+
+  app.get("/analyze/usage/:userId/:fileName", function(req, res) {
+    fileFunctions.file_get(req.params.userId, req.params.fileName, function(err,file) {
+      if (err) res.status(500).send("cannot find file");
+      const buffer = Buffer.from(file.logFile.data);
+
+      const strings = buffer
+        .toString("utf8")
+        .split("\n")
+        .filter(s => s.length > 6);
+      const applications = new Map();
+
+      for (var i = 0; i < strings.length; i++) {
+        //console.log('line #: ' + i + ' ' + strings[i])
+        const tokens = strings[i].split(" ");
+        //console.log(tokens[4])
+
+
+        if (!applications.has(tokens[4])) {
+
+          applications.set(tokens[4], new Map ([["DockerServerController",0],
+                                                ["DockerVolumeController", 0],
+                                                ["ProvisionController",0],
+                                                ['BlueprintController',0],
+                                                ]))
+        }
+
+        const counts = applications.get(tokens[4]);
+
+        tokens.map(t => {
+          //console.log(t)
+          if (t.search(/DockerServerController/i) >= 0) {
+            counts.set("DockerServerController", counts.get("DockerServerController")+1)
+          } else if (t.search(/DockerVolumeController/i) >= 0) {
+            counts.set("DockerVolumeController",counts.get("DockerVolumeController")+1)
+          } else if (t.search(/ProvisionController/i) >= 0) {
+            counts.set("ProvisionController",counts.get("ProvisionController")+1)
+          } else if (t.search(/BlueprintController/i) >= 0) {
+            counts.set("BlueprintController", counts.get("BlueprintController")+1)
           }
         });
       }
