@@ -5,9 +5,8 @@ import * as actions from '../actions';
 
 import Header from './Header';
 import Landing from './Landing';
-
-const fileUpload = () => <h2>File Upload!</h2>;
-const home = () => <h2>Home</h2>;
+import Home from './Home';
+import Upload from './Upload';
 
 class App extends Component {
   componentDidMount() {
@@ -21,8 +20,8 @@ class App extends Component {
           <div>
             <Header />
             <Route exact path="/" component={Landing} />
-            <Route exact path="/upload" component={fileUpload} />
-            <Route exact path="/home" component={home} />
+            <Route exact path="/upload" component={Upload} />
+            <Route path="/home" component={Home} />
           </div>
         </BrowserRouter>
       </div>
