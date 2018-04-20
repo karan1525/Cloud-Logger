@@ -62,6 +62,20 @@ function file_find(userId, fileName, callback) {
   });
 }
 
+function file_get(userId, fileName, callback) {
+  Log.findOne({ userId: userId, logFileName: fileName }, (err, file) => {
+    if (err) callback(err, false);
+
+    if (file) {
+      callback(err, file.toJSON());
+    } else {
+      callback(err, null);
+    }
+  });
+}
+
+
+
 function file_rename(userId, oldFileName, newFileName) {
   Log.findOneAndUpdate(
     { userId: userId, logFileName: oldFileName },
@@ -92,5 +106,6 @@ module.exports = {
   file_overwrite,
   file_find,
   file_rename,
+  file_get,
   file_getAllFiles
 };
