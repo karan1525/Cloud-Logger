@@ -11,16 +11,17 @@
   font-family: 'Roboto Condensed Light';
   color: whitesmoke;
   font-size: 5em;
-  margin: 0;
-  padding: 0;
+  margin: none;
+  padding: none;
+
 }
 
 .Body h2 {
   font-family: 'Roboto Condensed Light Italic';
   color: whitesmoke;
   font-size: 2em;
-  margin: 0;
-  padding: 0;
+  margin: none;
+  padding: none;
 }
 
 body {

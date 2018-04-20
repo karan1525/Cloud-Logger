@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const Log = mongoose.model("Log");
-const fs = require("fs");
+const mongoose = require('mongoose');
+const Log = mongoose.model('Log');
+const fs = require('fs');
 
 function file_upload(id, fileName, file) {
   const log = new Log({
@@ -18,9 +18,9 @@ function file_delete(userId, fileName) {
       if (err) throw err;
 
       if (file) {
-        console.log("file removed");
+        console.log('file removed');
       } else {
-        console.log("file not found");
+        console.log('file not found');
       }
     }
   );
@@ -34,9 +34,9 @@ function file_overwrite(userId, fileName, file) {
       if (err) throw err;
 
       if (file) {
-        console.log("file overwrote");
+        console.log('file overwrote');
       } else {
-        console.log("file not found");
+        console.log('file not found');
       }
     }
   );
@@ -48,16 +48,16 @@ function file_find(userId, fileName, callback) {
 
     if (files) {
       if (files.length >= 2) {
-        callback(err, "maxLimit");
+        callback(err, 'maxLimit');
       } else {
         if (files.filter(x => x.logFileName == fileName).length >= 1) {
-          callback(err, "fileNameExist");
+          callback(err, 'fileNameExist');
         } else {
-          callback(err, "validFile");
+          callback(err, 'validFile');
         }
       }
     } else {
-      callback(err, "validFile");
+      callback(err, 'validFile');
     }
   });
 }
@@ -84,12 +84,20 @@ function file_rename(userId, oldFileName, newFileName) {
       if (err) throw err;
 
       if (entry) {
-        console.log("file renamed");
+        console.log('file renamed');
       } else {
-        console.log("file not found");
+        console.log('file not found');
       }
     }
   );
+}
+
+function file_getAllFiles(userId, callback) {
+  Log.find({ userId: userId }, (err, files) => {
+    if (err) callback(err, null);
+
+    callback(err, files);
+  });
 }
 
 module.exports = {
@@ -98,5 +106,6 @@ module.exports = {
   file_overwrite,
   file_find,
   file_rename,
-  file_get
+  file_get,
+  file_getAllFiles
 };
