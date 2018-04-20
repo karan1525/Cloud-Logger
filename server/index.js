@@ -31,6 +31,6 @@ let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mLab connection error'));
 
 const PORT = process.env.PORT || 5000;
-app.listen(5000);
+app.listen(PORT);
 
 module.exports = app;
