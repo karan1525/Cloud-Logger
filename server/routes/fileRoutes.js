@@ -5,13 +5,13 @@ const formidable = require("formidable");
 const readline = require("readline");
 const Moment = require('moment');
 const MomentRange = require('moment-range');
-const moment = MomentRange.extendMoment(Moment); 
+const moment = MomentRange.extendMoment(Moment);
 const requireLogin = require('../middlewares/requireLogin');
 
 
 module.exports = app => {
   //upload new file
-  app.post('/api/upload', function(req, res) {
+  app.post('/api/upload', requireLogin, function(req, res) {
     const form = new formidable.IncomingForm();
 
     form.parse(req, function(err, fields, files) {
@@ -53,7 +53,7 @@ module.exports = app => {
   });
 
   //rename file
-  app.put('/api/rename', function(req, res) {
+  app.put('/api/rename', requireLogin, function(req, res) {
     const form = new formidable.IncomingForm();
 
     form.parse(req, function(err, fields, files) {
@@ -73,7 +73,7 @@ module.exports = app => {
   });
 
   //overwrite existing file
-  app.put('/upload/overwrite', function(req, res) {
+  app.put('/upload/overwrite', requireLogin, function(req, res) {
     const form = new formidable.IncomingForm();
 
     form.parse(req, function(err, fields, files) {
@@ -95,7 +95,7 @@ module.exports = app => {
 
   //delete existing file
 
-  app.delete('/api/delete', function(req, res) {
+  app.delete('/api/delete', requireLogin, function(req, res) {
     const form = new formidable.IncomingForm();
 
     form.parse(req, function(err, fields, files) {
@@ -127,14 +127,14 @@ module.exports = app => {
   });
 
   //get file and return as JSON object
-  app.get("/file/:userId/:fileName", function(req, res) {
+  app.get("/file/:userId/:fileName", requireLogin, function(req, res) {
     fileFunctions.file_get(req.params.userId, req.params.fileName, function(err,file) {
       if (err) res.status(500).send("cannot find file");
       res.status(200).send(file);
     });
   });
 
-  app.post("/analyze/error", function(req, res) {
+  app.post("/analyze/error", requireLogin, function(req, res) {
     fileFunctions.file_get(req.body.userId, req.body.fileName, function(err,file) {
       if (err) res.status(500).send("cannot find file");
       const buffer = Buffer.from(file.logFile.data);
@@ -144,8 +144,8 @@ module.exports = app => {
         .split("\n")
         .filter(s => s.length > 6);
       const applications = new Map();
-      const month = new Map ([['Jan','01'], ['Feb','02'], ['Mar','03'], 
-        ['Apr','04'], ['May','05'], ['Jun','06'], ['Jul','07'],['Aug','08'], ['Sep', '09'], 
+      const month = new Map ([['Jan','01'], ['Feb','02'], ['Mar','03'],
+        ['Apr','04'], ['May','05'], ['Jun','06'], ['Jul','07'],['Aug','08'], ['Sep', '09'],
         ['Oct','10'], ['Nov','11'], ['Dec','12']])
 
       const range = moment.range(req.body.start, req.body.end)
@@ -153,13 +153,13 @@ module.exports = app => {
 
 
       for (var i = 0; i < strings.length; i++) {
-        
+
         const tokens = strings[i].split(" ");
         if (i ==0) year = tokens[5].substring(0,4)
         //console.log(tokens[0]+ " "+tokens[1]+tokens[2])
         var d = year+'-'+ month.get(tokens[0])+'-'+tokens[1]+" "+tokens[2]
         //console.log(d)
-        const date = moment(d) 
+        const date = moment(d)
         console.log(d+ range.contains(date))
         if (range.contains(date)){
             if (!applications.has(tokens[4])) {
@@ -208,7 +208,7 @@ module.exports = app => {
         }
         }
 
-        
+
 
       const mapToObj = (aMap => {
           const obj = {}
@@ -224,7 +224,7 @@ module.exports = app => {
   });
 
 
-  app.post("/analyze/usage", function(req, res) {
+  app.post("/analyze/usage", requireLogin, function(req, res) {
 
     fileFunctions.file_get(req.body.userId, req.body.fileName, function(err,file) {
       if (err) res.status(500).send("cannot find file");
@@ -236,8 +236,8 @@ module.exports = app => {
         .filter(s => s.length > 6);
       const applications = new Map();
 
-      const month = new Map ([['Jan','01'], ['Feb','02'], ['Mar','03'], 
-        ['Apr','04'], ['May','05'], ['Jun','06'], ['Jul','07'],['Aug','08'], ['Sep', '09'], 
+      const month = new Map ([['Jan','01'], ['Feb','02'], ['Mar','03'],
+        ['Apr','04'], ['May','05'], ['Jun','06'], ['Jul','07'],['Aug','08'], ['Sep', '09'],
         ['Oct','10'], ['Nov','11'], ['Dec','12']])
       // '2017-08-19 00:00:00', '2017-08-21 00:00:00'
       const range = moment.range(req.body.start, req.body.end)
@@ -249,7 +249,7 @@ module.exports = app => {
         if (i ==0) year = tokens[5].substring(0,4)
         //console.log(tokens[4])
         var d = year+'-'+ month.get(tokens[0])+'-'+tokens[1]+" "+tokens[2]
-        const date = moment(d) 
+        const date = moment(d)
         if (range.contains(date)){
           if (!applications.has(tokens[4])) {
 
