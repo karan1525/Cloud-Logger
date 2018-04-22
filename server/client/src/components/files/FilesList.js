@@ -77,8 +77,8 @@ class FilesList extends Component {
                 <span className="card-title">{file.logFileName}</span>
                 <p>
                   I am a log file that you have uploaded. If you'd like to
-                  either rename, or delete me, please click one of the links
-                  below.
+                  either rename, delete or analyze me, please click one of the
+                  links below.
                 </p>
               </div>
               <div className="card-action">
@@ -92,7 +92,9 @@ class FilesList extends Component {
                   onClick={() => this.handleDelete(file.logFileName)}>
                   Delete
                 </a>
-                <a style={{ cursor: 'pointer' }}>Analyze</a>
+                <a href="/analyze" style={{ cursor: 'pointer' }}>
+                  Analyze
+                </a>
               </div>
             </div>
           </div>

@@ -7,6 +7,7 @@ import Header from './Header';
 import Landing from './Landing';
 import Home from './Home';
 import Upload from './Upload';
+import AnalyzePage from './files/AnalyzePage';
 
 class App extends Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class App extends Component {
             <Header />
             <Route exact path="/" component={Landing} />
             <Route exact path="/upload" component={Upload} />
+            <Route exact path="/analyze" component={AnalyzePage} />
             <Route path="/home" component={Home} />
           </div>
         </BrowserRouter>
