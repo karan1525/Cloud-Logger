@@ -3,6 +3,7 @@ import RenameModal from './RenameModal';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { fetchFiles } from '../../actions';
+import { Link } from 'react-router-dom';
 
 class FilesList extends Component {
   constructor(props) {
@@ -92,9 +93,14 @@ class FilesList extends Component {
                   onClick={() => this.handleDelete(file.logFileName)}>
                   Delete
                 </a>
-                <a href="/analyze" style={{ cursor: 'pointer' }}>
+                <Link
+                  to={{
+                    pathname: '/analyze',
+                    state: { fileName: file.logFileName }
+                  }}
+                  style={{ cursor: 'pointer' }}>
                   Analyze
-                </a>
+                </Link>
               </div>
             </div>
           </div>
