@@ -7,6 +7,26 @@ class AnalyzePage extends Component {
     console.log(receivedMessage);
   }
 
+  constructor() {
+    super();
+    this.state = {
+      errorButtonVisible: false,
+      usageButtonVisible: false
+    };
+  }
+
+  toggleError() {
+    this.setState(prevState => ({
+      errorButtonVisible: !prevState.errorButtonVisible
+    }));
+  }
+
+  toggleUsage() {
+    this.setState(prevState => ({
+      usageButtonVisible: !prevState.usageButtonVisible
+    }));
+  }
+
   render() {
     return (
       <div className="AnalyzePage">
@@ -16,12 +36,18 @@ class AnalyzePage extends Component {
             <h2 style={{ marginBottom: '50px' }}>
               CHOOSE THE TYPE OF ANALYSIS
             </h2>
-            <button className="waves-effect waves-light btn-large left">
+            <button
+              onClick={() => this.toggleError()}
+              className="waves-effect waves-light btn-large left">
               Error Analysis
             </button>
-            <button className="waves-effect waves-light btn-large right">
+            {this.state.errorButtonVisible ? <h2>HELLO!</h2> : null}
+            <button
+              onClick={() => this.toggleUsage()}
+              className="waves-effect waves-light btn-large right">
               Usage Analysis
             </button>
+            {this.state.usageButtonVisible ? <h2>HELLO!</h2> : null}
           </div>
         </div>
       </div>
