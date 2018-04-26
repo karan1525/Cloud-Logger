@@ -15,17 +15,33 @@ class ErrorAnalysis extends Component {
         $(document.activeElement).blur();
       }
     });
+
+    $('.timepicker').pickatime({
+      default: 'now',
+      twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
+      donetext: 'OK',
+      autoclose: false,
+      vibrate: true // vibrate the device when dragging clock hand
+    });
   }
 
   render() {
     return (
-      <div>
-        <div className="center">
-          <h4 className="white-text">
-            Analyze the file: {this.props.location.state.fileName}
-          </h4>
-        </div>
+      <div style={{ marginTop: '55px' }}>
         <div class="row">
+          <div class="input-field col s12">
+            <input
+              id="file_name"
+              type="text"
+              class="validate"
+              style={{ fontSize: '20px', marginTop: '5px' }}
+              disabled
+              value={this.props.location.state.fileName}
+            />
+            <label style={{ fontSize: '25px', color: 'white' }} for="file_name">
+              File Name
+            </label>
+          </div>
           <div class="input-field col s6">
             <input
               placeholder="YYYY/MM/DD"
@@ -35,7 +51,7 @@ class ErrorAnalysis extends Component {
             />
             <label
               className="active"
-              style={{ fontSize: '20px' }}
+              style={{ fontSize: '25px', color: 'white' }}
               for="start_date">
               Start Date
             </label>
@@ -49,10 +65,52 @@ class ErrorAnalysis extends Component {
             />
             <label
               className="active"
-              style={{ fontSize: '20px' }}
+              style={{ fontSize: '25px', color: 'white' }}
               for="end_date">
               End Date
             </label>
+          </div>
+          <div class="input-field col s6">
+            <input
+              placeholder="00:00"
+              id="start_time"
+              type="time"
+              className="timepicker"
+            />
+            <label
+              className="active"
+              style={{ fontSize: '25px', color: 'white' }}
+              for="start_time">
+              Start Time
+            </label>
+          </div>
+          <div class="input-field col s6">
+            <input
+              placeholder="00:00"
+              id="end_time"
+              type="time"
+              className="timepicker"
+            />
+            <label
+              className="active"
+              style={{ fontSize: '25px', color: 'white' }}
+              for="end_time">
+              End Time
+            </label>
+          </div>
+          <div>
+            <button
+              className="btn waves-effect waves-light left"
+              style={{ marginLeft: '250px', marginTop: '10px' }}>
+              Submit
+              <i className="material-icons right">done</i>
+            </button>
+            <button
+              className="btn waves-effect waves-light right red"
+              style={{ marginRight: '250px', marginTop: '10px' }}>
+              Cancel
+              <i className="material-icons right">cancel</i>
+            </button>
           </div>
         </div>
       </div>
