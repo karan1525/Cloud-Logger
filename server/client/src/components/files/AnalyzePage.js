@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styling/AnalyzePage.css';
 
 class AnalyzePage extends Component {
@@ -7,47 +8,30 @@ class AnalyzePage extends Component {
     console.log(receivedMessage);
   }
 
-  constructor() {
-    super();
-    this.state = {
-      errorButtonVisible: false,
-      usageButtonVisible: false
-    };
-  }
-
-  toggleError() {
-    this.setState(prevState => ({
-      errorButtonVisible: !prevState.errorButtonVisible
-    }));
-  }
-
-  toggleUsage() {
-    this.setState(prevState => ({
-      usageButtonVisible: !prevState.usageButtonVisible
-    }));
-  }
-
   render() {
     return (
       <div className="AnalyzePage">
         <div className="container">
           <div className="center">
-            <h2>{this.props.location.state.fileName}</h2>
             <h2 style={{ marginBottom: '50px' }}>
               CHOOSE THE TYPE OF ANALYSIS
             </h2>
-            <button
-              onClick={() => this.toggleError()}
-              className="waves-effect waves-light btn-large left">
+            <Link
+              className="waves-effect waves-light btn-large left"
+              to={{
+                pathname: '/errorAnalysis',
+                state: { fileName: this.props.location.state.fileName }
+              }}>
               Error Analysis
-            </button>
-            {this.state.errorButtonVisible ? <h2>HELLO!</h2> : null}
-            <button
-              onClick={() => this.toggleUsage()}
-              className="waves-effect waves-light btn-large right">
+            </Link>
+            <Link
+              className="waves-effect waves-light btn-large right"
+              to={{
+                pathname: '/usageAnalysis',
+                state: { fileName: this.props.location.state.fileName }
+              }}>
               Usage Analysis
-            </button>
-            {this.state.usageButtonVisible ? <h2>HELLO!</h2> : null}
+            </Link>
           </div>
         </div>
       </div>
