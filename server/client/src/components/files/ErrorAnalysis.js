@@ -6,6 +6,7 @@ class ErrorAnalysis extends Component {
     $('.datepicker').pickadate({
       selectMonths: true, // Creates a dropdown to control month
       selectYears: 15, // Creates a dropdown of 15 years to control year,
+      format: 'yyyy-mm-dd',
       today: 'Today',
       clear: 'Clear',
       close: 'Ok',
@@ -19,7 +20,11 @@ class ErrorAnalysis extends Component {
   render() {
     return (
       <div>
-        <h1>{this.props.location.state.fileName}</h1>
+        <div className="center">
+          <h4 className="white-text">
+            Analyze the file: {this.props.location.state.fileName}
+          </h4>
+        </div>
         <div class="row">
           <div class="input-field col s6">
             <input
@@ -28,7 +33,10 @@ class ErrorAnalysis extends Component {
               type="date"
               className="datepicker"
             />
-            <label style={{ fontSize: '25px' }} for="start_date">
+            <label
+              className="active"
+              style={{ fontSize: '20px' }}
+              for="start_date">
               Start Date
             </label>
           </div>
@@ -39,7 +47,10 @@ class ErrorAnalysis extends Component {
               type="date"
               className="datepicker"
             />
-            <label style={{ fontSize: '25px' }} for="end_date">
+            <label
+              className="active"
+              style={{ fontSize: '20px' }}
+              for="end_date">
               End Date
             </label>
           </div>
