@@ -76,17 +76,17 @@ function file_get(userId, fileName, callback) {
 
 
 
-function file_rename(userId, oldFileName, newFileName) {
+function file_rename(userId, oldFileName, newFileName, callback) {
   Log.findOneAndUpdate(
     { userId: userId, logFileName: oldFileName },
     { logFileName: newFileName },
     (err, entry) => {
-      if (err) throw err;
+      if (err) callback(false);
 
       if (entry) {
-        console.log('file renamed');
+        callback(true);
       } else {
-        console.log('file not found');
+        callback(false);
       }
     }
   );
