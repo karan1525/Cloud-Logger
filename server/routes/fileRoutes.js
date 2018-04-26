@@ -134,7 +134,7 @@ module.exports = app => {
     });
   });
 
-  app.post("/analyze/error", requireLogin, function(req, res) {
+  app.post("/analyze/error", function(req, res) {
     fileFunctions.file_get(req.body.userId, req.body.fileName, function(err,file) {
       if (err) res.status(500).send("cannot find file");
       const buffer = Buffer.from(file.logFile.data);
@@ -147,21 +147,31 @@ module.exports = app => {
       const month = new Map ([['Jan','01'], ['Feb','02'], ['Mar','03'],
         ['Apr','04'], ['May','05'], ['Jun','06'], ['Jul','07'],['Aug','08'], ['Sep', '09'],
         ['Oct','10'], ['Nov','11'], ['Dec','12']])
-
-      const range = moment.range(req.body.start, req.body.end)
-      var year =0
+      var range = null
+      if (req.body.start != null) {
+        range = moment.range(req.body.start, req.body.end)
+      }
+      var year = 0
 
 
       for (var i = 0; i < strings.length; i++) {
-
+        var bool = true
         const tokens = strings[i].split(" ");
-        if (i ==0) year = tokens[5].substring(0,4)
+        if (req.body.start != null) {
+          if (i ==0) year = tokens[5].substring(0,4)
         //console.log(tokens[0]+ " "+tokens[1]+tokens[2])
-        var d = year+'-'+ month.get(tokens[0])+'-'+tokens[1]+" "+tokens[2]
+          var d = year+'-'+ month.get(tokens[0])+'-'+tokens[1]+" "+tokens[2]
         //console.log(d)
-        const date = moment(d)
-        console.log(d+ range.contains(date))
-        if (range.contains(date)){
+          const date = moment(d)
+          if ( range.contains(date) ) {
+            bool = true
+          }
+          else {
+            bool = false
+          }
+        }
+
+          if (bool == true) {
             if (!applications.has(tokens[4])) {
 
             applications.set(tokens[4], new Map ([['exception',0],
@@ -206,9 +216,8 @@ module.exports = app => {
             }
           });
         }
-        }
 
-
+      }
 
       const mapToObj = (aMap => {
           const obj = {}
@@ -224,7 +233,8 @@ module.exports = app => {
   });
 
 
-  app.post("/analyze/usage", requireLogin, function(req, res) {
+
+  app.post("/analyze/usage", function(req, res) {
 
     fileFunctions.file_get(req.body.userId, req.body.fileName, function(err,file) {
       if (err) res.status(500).send("cannot find file");
@@ -236,21 +246,35 @@ module.exports = app => {
         .filter(s => s.length > 6);
       const applications = new Map();
 
-      const month = new Map ([['Jan','01'], ['Feb','02'], ['Mar','03'],
-        ['Apr','04'], ['May','05'], ['Jun','06'], ['Jul','07'],['Aug','08'], ['Sep', '09'],
+      const month = new Map ([['Jan','01'], ['Feb','02'], ['Mar','03'], 
+        ['Apr','04'], ['May','05'], ['Jun','06'], ['Jul','07'],['Aug','08'], ['Sep', '09'], 
         ['Oct','10'], ['Nov','11'], ['Dec','12']])
       // '2017-08-19 00:00:00', '2017-08-21 00:00:00'
-      const range = moment.range(req.body.start, req.body.end)
-      var year =0
+      var range = null
+      if (req.body.start != null) {
+        range = moment.range(req.body.start, req.body.end)
+      }
+      var year = 0
+
 
       for (var i = 0; i < strings.length; i++) {
-        //console.log('line #: ' + i + ' ' + strings[i])
+        var bool = true
         const tokens = strings[i].split(" ");
-        if (i ==0) year = tokens[5].substring(0,4)
-        //console.log(tokens[4])
-        var d = year+'-'+ month.get(tokens[0])+'-'+tokens[1]+" "+tokens[2]
-        const date = moment(d)
-        if (range.contains(date)){
+        if (req.body.start != null) {
+          if (i ==0) year = tokens[5].substring(0,4)
+        //console.log(tokens[0]+ " "+tokens[1]+tokens[2])
+          var d = year+'-'+ month.get(tokens[0])+'-'+tokens[1]+" "+tokens[2]
+        //console.log(d)
+          const date = moment(d)
+          if ( range.contains(date) ) {
+            bool = true
+          }
+          else {
+            bool = false
+          }
+        }
+    
+        if (bool == true){
           if (!applications.has(tokens[4])) {
 
             applications.set(tokens[4], new Map ([["DockerServerController",0],
