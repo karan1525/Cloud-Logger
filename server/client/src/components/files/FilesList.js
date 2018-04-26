@@ -43,6 +43,7 @@ class FilesList extends Component {
     console.log(oldFileName);
     console.log(newFileName);
     return axios.put(url, {
+      enctype: 'multipart/form-data',
       oldFileName: oldFileName,
       newFileName: newFileName
     });

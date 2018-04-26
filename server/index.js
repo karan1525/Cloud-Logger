@@ -4,9 +4,8 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 
-const bodyParser = require('body-parser');
-require('./models/Log');
-require('./models/User');
+require('./models/log');
+require('./models/user');
 
 require('./services/passport');
 
@@ -22,7 +21,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(bodyParser.json())
 
 require('./routes/authRoutes')(app);
 require('./routes/fileRoutes')(app);
