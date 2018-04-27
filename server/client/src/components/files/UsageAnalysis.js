@@ -29,12 +29,12 @@ class UsageAnalysis extends Component {
   render() {
     return (
       <div style={{ marginTop: '55px' }}>
-        <div class="row">
-          <div class="input-field col s12">
+        <div className="row">
+          <div className="input-field col s12">
             <input
               id="file_name"
               type="text"
-              class="validate"
+              className="validate"
               style={{ fontSize: '20px', marginTop: '5px' }}
               disabled
               value={this.props.location.state.fileName}
@@ -42,11 +42,11 @@ class UsageAnalysis extends Component {
             <label
               className="active"
               style={{ fontSize: '25px', color: 'white' }}
-              for="file_name">
+              htmlFor="file_name">
               File Name
             </label>
           </div>
-          <div class="input-field col s6">
+          <div className="input-field col s6">
             <input
               placeholder="YYYY/MM/DD"
               id="start_date"
@@ -56,11 +56,11 @@ class UsageAnalysis extends Component {
             <label
               className="active"
               style={{ fontSize: '25px', color: 'white' }}
-              for="start_date">
+              htmlFor="start_date">
               Start Date
             </label>
           </div>
-          <div class="input-field col s6">
+          <div className="input-field col s6">
             <input
               placeholder="YYYY/MM/DD"
               id="end_date"
@@ -70,11 +70,11 @@ class UsageAnalysis extends Component {
             <label
               className="active"
               style={{ fontSize: '25px', color: 'white' }}
-              for="end_date">
+              htmlFor="end_date">
               End Date
             </label>
           </div>
-          <div class="input-field col s6">
+          <div className="input-field col s6">
             <input
               placeholder="00:00"
               id="start_time"
@@ -84,11 +84,11 @@ class UsageAnalysis extends Component {
             <label
               className="active"
               style={{ fontSize: '25px', color: 'white' }}
-              for="start_time">
+              htmlFor="start_time">
               Start Time
             </label>
           </div>
-          <div class="input-field col s6">
+          <div className="input-field col s6">
             <input
               placeholder="00:00"
               id="end_time"
@@ -98,7 +98,7 @@ class UsageAnalysis extends Component {
             <label
               className="active"
               style={{ fontSize: '25px', color: 'white' }}
-              for="end_time">
+              htmlFor="end_time">
               End Time
             </label>
           </div>
