@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import $ from 'jquery';
 
 class ErrorAnalysis extends Component {
@@ -38,7 +39,10 @@ class ErrorAnalysis extends Component {
               disabled
               value={this.props.location.state.fileName}
             />
-            <label style={{ fontSize: '25px', color: 'white' }} for="file_name">
+            <label
+              className="active"
+              style={{ fontSize: '25px', color: 'white' }}
+              for="file_name">
               File Name
             </label>
           </div>
@@ -105,12 +109,13 @@ class ErrorAnalysis extends Component {
               Submit
               <i className="material-icons right">done</i>
             </button>
-            <button
+            <Link
+              to="/home"
               className="btn waves-effect waves-light right red"
               style={{ marginRight: '250px', marginTop: '10px' }}>
               Cancel
               <i className="material-icons right">cancel</i>
-            </button>
+            </Link>
           </div>
         </div>
       </div>
