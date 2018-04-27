@@ -136,7 +136,7 @@ module.exports = app => {
     });
   });
 
-  app.post('/analyze/error', function(req, res) {
+  app.post('/api/analyze/error', function(req, res) {
     const form = new formidable.IncomingForm();
 
     form.parse(req, function(err, fields, files) {
@@ -266,7 +266,7 @@ module.exports = app => {
     });
   });
 
-  app.post('/analyze/usage', function(req, res) {
+  app.post('/api/analyze/usage', function(req, res) {
     const form = new formidable.IncomingForm();
 
     form.parse(req, function(err, fields, files) {
