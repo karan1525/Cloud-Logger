@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { post } from 'axios';
 import DateTimePicker from 'react-datetime-picker';
 
-class UsageAnalysis extends Component {
+class ErrorAnalysis extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -121,4 +121,4 @@ function mapStateToProps({ auth }) {
   return { auth };
 }
 
-export default connect(mapStateToProps, null)(UsageAnalysis);
+export default connect(mapStateToProps, null)(ErrorAnalysis);
