@@ -9,6 +9,8 @@ class ErrorAnalysis extends Component {
     super(props);
     this.state = {
       fileName: this.props.location.state.fileName,
+      fileAnalysis: null,
+      loading: false,
       date: new Date()
     };
 
@@ -31,14 +33,18 @@ class ErrorAnalysis extends Component {
       }
     };
 
-    post(url, formData, config)
-      .then(res => {
-        alert('file analyzed');
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err.response.data);
-      });
+    this.setState({ loading: true }, () => {
+      post(url, formData, config)
+        .then(res =>
+          this.setState({
+            fileAnalysis: res.data
+          })
+        )
+        .catch(err => {
+          console.log(err.response.data);
+        });
+    });
+    console.log(this.state);
   }
 
   getUserId() {
@@ -92,14 +98,16 @@ class ErrorAnalysis extends Component {
               className="active"
               style={{ fontSize: '25px', color: 'white' }}
               htmlFor="dateTimePicker">
-              Date and Time
+              Start Date and Time
             </label>
           </div>
           <div>
             <button
               className="btn waves-effect waves-light left"
               style={{ marginLeft: '250px', marginTop: '10px' }}
-              onClick={this.makeRequest}>
+              onClick={() => {
+                this.makeRequest();
+              }}>
               Submit
               <i className="material-icons right">done</i>
             </button>
@@ -111,6 +119,20 @@ class ErrorAnalysis extends Component {
               <i className="material-icons right">cancel</i>
             </Link>
           </div>
+        </div>
+        <div className="center">
+          {this.state.loading ? (
+            <Link
+              to={{
+                pathname: '/results',
+                state: { fileAnalysis: this.state.fileAnalysis }
+              }}
+              className="btn waves-effect waves-light"
+              style={{ marginTop: '10px' }}>
+              View Results
+              <i className="material-icons right">check_circle</i>
+            </Link>
+          ) : null}
         </div>
       </div>
     );

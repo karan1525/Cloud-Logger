@@ -10,6 +10,7 @@ import Upload from './Upload';
 import AnalyzePage from './files/AnalyzePage';
 import ErrorAnalysis from './files/ErrorAnalysis';
 import UsageAnalysis from './files/UsageAnalysis';
+import Results from './files/Results';
 
 class App extends Component {
   componentDidMount() {
@@ -27,6 +28,7 @@ class App extends Component {
             <Route exact path="/analyze" component={AnalyzePage} />
             <Route exact path="/errorAnalysis" component={ErrorAnalysis} />
             <Route exact path="/usageAnalysis" component={UsageAnalysis} />
+            <Route exact path="/results" component={Results} />
             <Route path="/home" component={Home} />
           </div>
         </BrowserRouter>
