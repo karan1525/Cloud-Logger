@@ -9,14 +9,19 @@ class UsageAnalysis extends Component {
     super(props);
     this.state = {
       fileName: this.props.location.state.fileName,
-      date: new Date()
+      fileAnalysis: null,
+      loading: false,
+      endDate: new Date(),
+      startDate: new Date()
     };
 
-    this.onChange = this.onChange.bind(this);
+    this.onStartDateChange = this.onStartDateChange.bind(this);
+    this.onEndDateChange = this.onEndDateChange.bind(this);
     this.makeRequest = this.makeRequest.bind(this);
   }
 
-  onChange = date => this.setState({ date });
+  onStartDateChange = startDate => this.setState({ startDate });
+  onEndDateChange = endDate => this.setState({ endDate });
 
   makeRequest() {
     const url = '/api/analyze/usage';
@@ -31,10 +36,12 @@ class UsageAnalysis extends Component {
       }
     };
 
+    this.setState({ loading: true });
     post(url, formData, config)
       .then(res => {
         alert('file analyzed');
-        console.log(res.data);
+        this.setState({ fileAnalysis: res.data });
+        console.log(this.state);
       })
       .catch(err => {
         console.log(err.response.data);
@@ -84,33 +91,72 @@ class UsageAnalysis extends Component {
                 locale="en-US"
                 isWidgetOpen="false"
                 maxDetail="second"
-                onChange={this.onChange}
-                value={this.state.date}
+                onChange={this.onStartDateChange}
+                value={this.state.startDate}
               />
+              <span style={{ marginLeft: '60px' }}>
+                <DateTimePicker
+                  id="endTimePicker"
+                  locale="en-US"
+                  isWidgetOpen="false"
+                  maxDetail="second"
+                  onChange={this.onEndDateChange}
+                  value={this.state.endDate}
+                />
+                <label
+                  className="active"
+                  style={{
+                    fontSize: '25px',
+                    color: 'white',
+                    marginLeft: '287px'
+                  }}
+                  htmlFor="endTimePicker">
+                  End Date and Time
+                </label>
+              </span>
             </div>
             <label
               className="active"
               style={{ fontSize: '25px', color: 'white' }}
               htmlFor="dateTimePicker">
-              Date and Time
+              Start Date and Time
             </label>
           </div>
           <div>
             <button
               className="btn waves-effect waves-light left"
-              style={{ marginLeft: '250px', marginTop: '10px' }}
-              onClick={this.makeRequest}>
+              style={{ marginLeft: '400px', marginTop: '300px' }}
+              onClick={() => {
+                this.makeRequest();
+              }}>
               Submit
               <i className="material-icons right">done</i>
             </button>
             <Link
               to="/home"
               className="btn waves-effect waves-light right red"
-              style={{ marginRight: '250px', marginTop: '10px' }}>
+              style={{
+                marginRight: '400px',
+                marginTop: '300px'
+              }}>
               Cancel
               <i className="material-icons right">cancel</i>
             </Link>
           </div>
+        </div>
+        <div className="center">
+          {this.state.loading ? (
+            <Link
+              to={{
+                pathname: '/results',
+                state: { fileAnalysis: this.state.fileAnalysis }
+              }}
+              className="btn waves-effect waves-light"
+              style={{ marginTop: '10px' }}>
+              View Results
+              <i className="material-icons right">check_circle</i>
+            </Link>
+          ) : null}
         </div>
       </div>
     );
