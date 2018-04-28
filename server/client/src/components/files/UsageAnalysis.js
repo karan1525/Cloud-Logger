@@ -1,43 +1,70 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import $ from 'jquery';
+import { connect } from 'react-redux';
+import { post } from 'axios';
+import DateTimePicker from 'react-datetime-picker';
 
 class UsageAnalysis extends Component {
-  componentDidMount() {
-    $('.datepicker').pickadate({
-      selectMonths: true, // Creates a dropdown to control month
-      selectYears: 15, // Creates a dropdown of 15 years to control year,
-      format: 'yyyy-mm-dd',
-      today: 'Today',
-      clear: 'Clear',
-      close: 'Ok',
-      closeOnSelect: false,
-      onClose: function() {
-        $(document.activeElement).blur();
-      }
-    });
+  constructor(props) {
+    super(props);
+    this.state = {
+      fileName: this.props.location.state.fileName,
+      date: new Date()
+    };
 
-    $('.timepicker').pickatime({
-      default: 'now',
-      twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
-      donetext: 'OK',
-      autoclose: false,
-      vibrate: true // vibrate the device when dragging clock hand
-    });
+    this.onChange = this.onChange.bind(this);
+    this.makeRequest = this.makeRequest.bind(this);
+  }
+
+  onChange = date => this.setState({ date });
+
+  makeRequest() {
+    const url = '/api/analyze/usage';
+    const fileName = this.state.fileName;
+    const formData = new FormData();
+    const id = this.getUserId();
+    formData.append('fileName', fileName);
+    formData.append('userId', id);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    };
+
+    post(url, formData, config)
+      .then(res => {
+        alert('file analyzed');
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  }
+
+  getUserId() {
+    switch (this.props.auth) {
+      case null:
+        return;
+      case false:
+        return <h2>YER NOT LOGGED IN</h2>;
+      default:
+        return this.props.auth.userId;
+    }
   }
 
   render() {
     return (
       <div style={{ marginTop: '55px' }}>
         <div className="row">
-          <div className="input-field col s12">
+          <div className="input-field col s6">
             <input
               id="file_name"
               type="text"
               className="validate"
-              style={{ fontSize: '20px', marginTop: '5px' }}
+              style={{ fontSize: '25px', marginTop: '20px', color: 'white' }}
               disabled
-              value={this.props.location.state.fileName}
+              value={this.state.fileName}
+              onChange={this.makeRequest.bind(this)}
             />
             <label
               className="active"
@@ -47,65 +74,32 @@ class UsageAnalysis extends Component {
             </label>
           </div>
           <div className="input-field col s6">
-            <input
-              placeholder="YYYY/MM/DD"
-              id="start_date"
-              type="date"
-              className="datepicker"
-            />
+            <div
+              style={{
+                marginTop: '20px',
+                fontSize: '15px'
+              }}>
+              <DateTimePicker
+                id="dateTimePicker"
+                locale="en-US"
+                isWidgetOpen="false"
+                maxDetail="second"
+                onChange={this.onChange}
+                value={this.state.date}
+              />
+            </div>
             <label
               className="active"
               style={{ fontSize: '25px', color: 'white' }}
-              htmlFor="start_date">
-              Start Date
-            </label>
-          </div>
-          <div className="input-field col s6">
-            <input
-              placeholder="YYYY/MM/DD"
-              id="end_date"
-              type="date"
-              className="datepicker"
-            />
-            <label
-              className="active"
-              style={{ fontSize: '25px', color: 'white' }}
-              htmlFor="end_date">
-              End Date
-            </label>
-          </div>
-          <div className="input-field col s6">
-            <input
-              placeholder="00:00"
-              id="start_time"
-              type="time"
-              className="timepicker"
-            />
-            <label
-              className="active"
-              style={{ fontSize: '25px', color: 'white' }}
-              htmlFor="start_time">
-              Start Time
-            </label>
-          </div>
-          <div className="input-field col s6">
-            <input
-              placeholder="00:00"
-              id="end_time"
-              type="time"
-              className="timepicker"
-            />
-            <label
-              className="active"
-              style={{ fontSize: '25px', color: 'white' }}
-              htmlFor="end_time">
-              End Time
+              htmlFor="dateTimePicker">
+              Date and Time
             </label>
           </div>
           <div>
             <button
               className="btn waves-effect waves-light left"
-              style={{ marginLeft: '250px', marginTop: '10px' }}>
+              style={{ marginLeft: '250px', marginTop: '10px' }}
+              onClick={this.makeRequest}>
               Submit
               <i className="material-icons right">done</i>
             </button>
@@ -123,4 +117,8 @@ class UsageAnalysis extends Component {
   }
 }
 
-export default UsageAnalysis;
+function mapStateToProps({ auth }) {
+  return { auth };
+}
+
+export default connect(mapStateToProps, null)(UsageAnalysis);
