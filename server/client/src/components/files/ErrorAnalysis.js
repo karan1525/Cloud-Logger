@@ -11,14 +11,17 @@ class ErrorAnalysis extends Component {
       fileName: this.props.location.state.fileName,
       fileAnalysis: null,
       loading: false,
-      date: new Date()
+      endDate: new Date(),
+      startDate: new Date()
     };
 
-    this.onChange = this.onChange.bind(this);
+    this.onStartDateChange = this.onStartDateChange.bind(this);
+    this.onEndDateChange = this.onEndDateChange.bind(this);
     this.makeRequest = this.makeRequest.bind(this);
   }
 
-  onChange = date => this.setState({ date });
+  onStartDateChange = startDate => this.setState({ startDate });
+  onEndDateChange = endDate => this.setState({ endDate });
 
   makeRequest() {
     const url = '/api/analyze/error';
@@ -33,18 +36,16 @@ class ErrorAnalysis extends Component {
       }
     };
 
-    this.setState({ loading: true }, () => {
-      post(url, formData, config)
-        .then(res =>
-          this.setState({
-            fileAnalysis: res.data
-          })
-        )
-        .catch(err => {
-          console.log(err.response.data);
-        });
-    });
-    console.log(this.state);
+    this.setState({ loading: true });
+    post(url, formData, config)
+      .then(res => {
+        alert('file analyzed');
+        this.setState({ fileAnalysis: res.data });
+        console.log(this.state);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      });
   }
 
   getUserId() {
@@ -90,9 +91,29 @@ class ErrorAnalysis extends Component {
                 locale="en-US"
                 isWidgetOpen="false"
                 maxDetail="second"
-                onChange={this.onChange}
-                value={this.state.date}
+                onChange={this.onStartDateChange}
+                value={this.state.startDate}
               />
+              <span style={{ marginLeft: '60px' }}>
+                <DateTimePicker
+                  id="endTimePicker"
+                  locale="en-US"
+                  isWidgetOpen="false"
+                  maxDetail="second"
+                  onChange={this.onEndDateChange}
+                  value={this.state.endDate}
+                />
+                <label
+                  className="active"
+                  style={{
+                    fontSize: '25px',
+                    color: 'white',
+                    marginLeft: '287px'
+                  }}
+                  htmlFor="endTimePicker">
+                  End Date and Time
+                </label>
+              </span>
             </div>
             <label
               className="active"
@@ -104,7 +125,7 @@ class ErrorAnalysis extends Component {
           <div>
             <button
               className="btn waves-effect waves-light left"
-              style={{ marginLeft: '250px', marginTop: '10px' }}
+              style={{ marginLeft: '400px', marginTop: '300px' }}
               onClick={() => {
                 this.makeRequest();
               }}>
@@ -114,7 +135,10 @@ class ErrorAnalysis extends Component {
             <Link
               to="/home"
               className="btn waves-effect waves-light right red"
-              style={{ marginRight: '250px', marginTop: '10px' }}>
+              style={{
+                marginRight: '400px',
+                marginTop: '300px'
+              }}>
               Cancel
               <i className="material-icons right">cancel</i>
             </Link>
