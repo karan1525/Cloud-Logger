@@ -33,12 +33,15 @@ class Upload extends Component {
     var file = this.state.file;
     var filename = this.state.file.name;
     var ext = filename.split('.').pop();
+    const fileSize = file.size;
     if (ext !== 'txt') {
       alert(
         'Sorry, ' +
           ext +
           ' files are not accepted. Accepted files are txt only.'
       );
+    } else if (fileSize > 2161865) {
+      alert('Your file is too big!');
     } else {
       this.fileUpload(file);
       alert('A file was submitted: ' + filename);
