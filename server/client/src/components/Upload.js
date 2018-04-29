@@ -41,7 +41,7 @@ class Upload extends Component {
           ' files are not accepted. Accepted files are txt only.'
       );
     } else if (fileSize > 2161865) {
-      alert('Your file is too big!');
+      alert('Your file is too big! Accepted files < 2.1 MB');
     } else {
       this.fileUpload(file);
       alert('A file was submitted: ' + filename);
