@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { fetchFiles } from '../../actions';
 import { Link } from 'react-router-dom';
+import { ThreeBounce } from 'better-react-spinkit';
 
 class FilesList extends Component {
   constructor(props) {
@@ -11,12 +12,15 @@ class FilesList extends Component {
     this.state = {
       isModalOpen: false,
       currentFileName: null,
-      newFileName: null
+      newFileName: null,
+      fetching: true
     };
   }
 
   componentDidMount() {
-    this.props.fetchFiles();
+    this.props.fetchFiles().then(() => {
+      this.setState({ fetching: false });
+    });
 
     this.handleModalChange = this.handleModalChange.bind(this);
     this.handleModalSubmit = this.handleModalSubmit.bind(this);
@@ -112,7 +116,19 @@ class FilesList extends Component {
 
   render() {
     return [
-      <div key="filesRender">{this.renderFiles()}</div>,
+      <div key="filesRender">
+        {this.state.fetching ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
+            <ThreeBounce size={40} timingFunction="ease-in" color="#ffffff" />
+          </div>
+        ) : (
+          this.renderFiles()
+        )}
+      </div>,
       <div key="renameModal">
         <RenameModal
           isOpen={this.state.isModalOpen}
