@@ -33,15 +33,12 @@ class Upload extends Component {
     var file = this.state.file;
     var filename = this.state.file.name;
     var ext = filename.split('.').pop();
-    const fileSize = file.size;
     if (ext !== 'txt') {
       alert(
         'Sorry, ' +
           ext +
           ' files are not accepted. Accepted files are txt only.'
       );
-    } else if (fileSize > 2161865) {
-      alert('Your file is too big! Accepted files < 2.1 MB');
     } else {
       this.fileUpload(file);
       alert('A file was submitted: ' + filename);
@@ -71,6 +68,7 @@ class Upload extends Component {
     post(url, formData, config)
       .then(res => {
         alert('file successfully uploaded');
+        window.location.href = '/home';
       })
       .catch(err => {
         if (err.response.data === 'user has reached a max limit') {
@@ -81,7 +79,6 @@ class Upload extends Component {
           alert('something went wrong! please try again!');
         }
       });
-    window.location.href = '/home';
   }
 
   render() {

@@ -11,6 +11,7 @@ module.exports = app => {
   //upload new file
   app.post('/api/upload', requireLogin, function(req, res) {
     const form = new formidable.IncomingForm();
+    form.maxFileSize = 16 * 1024 * 1024;
 
     form.parse(req, function(err, fields, files) {
       if (err) {
