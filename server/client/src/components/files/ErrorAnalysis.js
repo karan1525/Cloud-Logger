@@ -111,7 +111,7 @@ class ErrorAnalysis extends Component {
                     marginLeft: '287px'
                   }}
                   htmlFor="endTimePicker">
-                  End Date and Time
+                  End Date and Time (O)
                 </label>
               </span>
             </div>
@@ -119,7 +119,7 @@ class ErrorAnalysis extends Component {
               className="active"
               style={{ fontSize: '25px', color: 'white' }}
               htmlFor="dateTimePicker">
-              Start Date and Time
+              Start Date and Time (O)
             </label>
           </div>
           <div>

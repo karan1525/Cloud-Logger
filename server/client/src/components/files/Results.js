@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 
 class Results extends Component {
@@ -40,14 +41,14 @@ class Results extends Component {
           borderColor: 'rgba(0,0,0,1)',
           borderWidth: 3,
           hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-          hoverBorderColor: 'rgba(255,99,132,1)',
+          hoverBorderColor: 'black',
           data: data_values
         }
       ]
     };
 
     return (
-      <div>
+      <div style={{ marginTop: '30px' }}>
         <h2 className="center" style={{ color: 'white' }}>
           Results
         </h2>
@@ -77,6 +78,11 @@ class Results extends Component {
             }
           }}
         />
+        <div className="center">
+          <Link to="/home" className="btn waves-effect waves-light">
+            Return Home
+          </Link>
+        </div>
       </div>
     );
   }
