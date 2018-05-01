@@ -28,16 +28,30 @@ class Upload extends Component {
     this.setState({ file: event.target.files[0] });
   }
 
+  bytesToSize(bytes) {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) return 'n/a';
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    if (i === 0) return `${bytes} ${sizes[i]})`;
+    return `${(bytes / 1024 ** i).toFixed(1)} ${sizes[i]}`;
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     var file = this.state.file;
     var filename = this.state.file.name;
+    const fileSize = file.size;
     var ext = filename.split('.').pop();
     if (ext !== 'txt') {
       alert(
         'Sorry, ' +
           ext +
           ' files are not accepted. Accepted files are txt only.'
+      );
+    } else if (fileSize > 16841924) {
+      alert(
+        'Sorry. File size must be less than 16MB. Your file is: ' +
+          this.bytesToSize(fileSize)
       );
     } else {
       this.fileUpload(file);
