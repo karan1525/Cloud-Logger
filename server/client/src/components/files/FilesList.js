@@ -133,23 +133,24 @@ class FilesList extends Component {
         <RenameModal
           isOpen={this.state.isModalOpen}
           onClose={() => this.closeModal}>
-          <h3>Rename {this.state.currentFileName}?</h3>
-          <p>Please submit a new name for this file. </p>
+          <h3 align="center">Rename {this.state.currentFileName}?</h3>
+          <p align="center">Please type a new file name.</p>
           <form onSubmit={this.handleModalSubmit}>
             <input
               type="text"
+              background="#e0e0e0"
               newfilename={this.state.newFileName}
               onChange={this.handleModalChange}
             />
             <button
-              className="btn waves-effect waves-light left"
+              className="btn waves-effect waves-light right blue"
               type="submit"
               value="Submit">
-              Submit
+              Rename
               <i className="material-icons right">done</i>
             </button>
             <button
-              className="btn waves-effect waves-light right red"
+              className="btn waves-effect waves-light grey lighten-2 grey-text text-darken-2"
               onClick={() => this.closeModal()}>
               Cancel
               <i className="material-icons right">cancel</i>
