@@ -9,33 +9,52 @@ class AnalyzePage extends Component {
   }
 
   render() {
-    return (
+    return [
       <div className="AnalyzePage">
         <div className="container">
           <div className="center">
             <h2 style={{ marginBottom: '50px' }}>
-              CHOOSE THE TYPE OF ANALYSIS
+              CHOOSE THE TYPE OF ANALYSIS:
             </h2>
-            <Link
-              className="waves-effect waves-light btn-large left"
-              to={{
-                pathname: '/errorAnalysis',
-                state: { fileName: this.props.location.state.fileName }
+            <div className="buttons"
+              style={{
+                marginRight: '15px',
               }}>
-              Error Analysis
-            </Link>
-            <Link
-              className="waves-effect waves-light btn-large right"
-              to={{
-                pathname: '/usageAnalysis',
-                state: { fileName: this.props.location.state.fileName }
+              <Link
+                className="waves-effect waves-light btn-large amber darken-2"
+                to={{
+                  pathname: '/errorAnalysis',
+                  state: { fileName: this.props.location.state.fileName }
+                }}>
+                Error Analysis
+              </Link>
+            </div>
+            <div className="buttons"
+              style={{
+                marginLeft: '15px',
               }}>
-              Usage Analysis
-            </Link>
+              <Link
+                className="waves-effect waves-light btn-large amber darken-2"
+                to={{
+                  pathname: '/usageAnalysis',
+                  state: { fileName: this.props.location.state.fileName }
+                }}>
+                Usage Analysis
+              </Link>
+            </div>
           </div>
         </div>
+      </div>,
+      <div align="center"
+        style={{
+          marginTop: '15px',
+        }}>
+        <a
+          href="/home"
+          className="waves-effect waves-teal btn-flat grey-text text-darken-2"
+        >Back Home</a>
       </div>
-    );
+    ];
   }
 }
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { post } from 'axios';
 import DateTimePicker from 'react-datetime-picker';
+import '../../styling/ErrorAnalysis.css';
 
 class ErrorAnalysis extends Component {
   constructor(props) {
@@ -60,31 +61,41 @@ class ErrorAnalysis extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: '55px' }}>
+      <div className="ErrorAnalysis">
         <div className="row">
-          <div className="input-field col s6">
+          <div className="input-field row s6">
+            <label
+              className="active"
+              htmlFor="file_name">
+              File Name
+            </label>
             <input
               id="file_name"
               type="text"
               className="validate"
-              style={{ fontSize: '25px', marginTop: '20px', color: 'white' }}
               disabled
               value={this.state.fileName}
               onChange={this.makeRequest.bind(this)}
             />
-            <label
-              className="active"
-              style={{ fontSize: '25px', color: 'white' }}
-              htmlFor="file_name">
-              File Name
-            </label>
           </div>
-          <div className="input-field col s6">
-            <div
-              style={{
-                marginTop: '20px',
-                fontSize: '15px'
-              }}>
+          <div className="input-field row s6">
+            <div className="input-field col s6">
+              <label
+                className="active"
+                htmlFor="dateTimePicker">
+                Start Date and Time (O)
+              </label>
+            </div>
+            <div className="input-field col s6">
+              <label
+                className="active"
+                htmlFor="endTimePicker">
+                End Date and Time (O)
+              </label>
+            </div>
+          </div>
+          <div className="input-field row s6">
+            <div className="input-field col s6">
               <DateTimePicker
                 id="dateTimePicker"
                 locale="en-US"
@@ -93,38 +104,24 @@ class ErrorAnalysis extends Component {
                 onChange={this.onStartDateChange}
                 value={this.state.startDate}
               />
-              <span style={{ marginLeft: '60px' }}>
-                <DateTimePicker
-                  id="endTimePicker"
-                  locale="en-US"
-                  isWidgetOpen="false"
-                  maxDetail="second"
-                  onChange={this.onEndDateChange}
-                  value={this.state.endDate}
-                />
-                <label
-                  className="active"
-                  style={{
-                    fontSize: '25px',
-                    color: 'white',
-                    marginLeft: '287px'
-                  }}
-                  htmlFor="endTimePicker">
-                  End Date and Time (O)
-                </label>
-              </span>
             </div>
-            <label
-              className="active"
-              style={{ fontSize: '25px', color: 'white' }}
-              htmlFor="dateTimePicker">
-              Start Date and Time (O)
-            </label>
+            <div className="input-field col s6">
+              <DateTimePicker
+                id="endTimePicker"
+                locale="en-US"
+                isWidgetOpen="false"
+                maxDetail="second"
+                onChange={this.onEndDateChange}
+                value={this.state.endDate}
+              />
+            </div>
           </div>
-          <div>
+          <div
+            style={{
+              marginTop: '300px'
+            }}>
             <button
-              className="btn waves-effect waves-light left"
-              style={{ marginLeft: '400px', marginTop: '300px' }}
+              className="btn waves-effect waves-light right blue"
               onClick={() => {
                 this.makeRequest();
               }}>
@@ -133,11 +130,7 @@ class ErrorAnalysis extends Component {
             </button>
             <Link
               to="/home"
-              className="btn waves-effect waves-light right red"
-              style={{
-                marginRight: '400px',
-                marginTop: '300px'
-              }}>
+              className="btn waves-effect waves-light grey lighten-2 grey-text text-darken-2 left">
               Cancel
               <i className="material-icons right">cancel</i>
             </Link>
@@ -150,8 +143,7 @@ class ErrorAnalysis extends Component {
                 pathname: '/results',
                 state: { fileAnalysis: this.state.fileAnalysis }
               }}
-              className="btn waves-effect waves-light"
-              style={{ marginTop: '10px' }}>
+              className="btn-large waves-effect waves-light amber">
               View Results
               <i className="material-icons right">check_circle</i>
             </Link>

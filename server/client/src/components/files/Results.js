@@ -79,7 +79,7 @@ class Results extends Component {
           }}
         />
         <div className="center">
-          <Link to="/home" className="btn waves-effect waves-light">
+          <Link to="/home" className="btn waves-effect waves-light blue">
             Return Home
           </Link>
         </div>
