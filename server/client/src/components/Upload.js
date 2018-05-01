@@ -39,23 +39,27 @@ class Upload extends Component {
   handleSubmit(event) {
     event.preventDefault();
     var file = this.state.file;
-    var filename = this.state.file.name;
-    const fileSize = file.size;
-    var ext = filename.split('.').pop();
-    if (ext !== 'txt') {
-      alert(
-        'Sorry, ' +
-          ext +
-          ' files are not accepted. Accepted files are txt only.'
-      );
-    } else if (fileSize > 16841924) {
-      alert(
-        'Sorry. File size must be less than 16MB. Your file is: ' +
-          this.bytesToSize(fileSize)
-      );
+    if (file) {
+      var filename = this.state.file.name;
+      const fileSize = file.size;
+      var ext = filename.split('.').pop();
+      if (ext !== 'txt') {
+        alert(
+          'Sorry, ' +
+            ext +
+            ' files are not accepted. Accepted files are txt only.'
+        );
+      } else if (fileSize > 16841924) {
+        alert(
+          'Sorry. File size must be less than 16MB. Your file is: ' +
+            this.bytesToSize(fileSize)
+        );
+      } else {
+        this.fileUpload(file);
+        alert('A file was submitted: ' + filename);
+      }
     } else {
-      this.fileUpload(file);
-      alert('A file was submitted: ' + filename);
+      alert('Please select a file to upload');
     }
   }
 
