@@ -152,6 +152,15 @@ module.exports = app => {
           .toString('utf8')
           .split('\n')
           .filter(s => s.length > 6);
+
+
+        if (strings[0] == null || strings[0] == "") {
+          err_response = {
+            "message" : "Cannot analyze this file, please re-upload a valid file"
+          }
+          res.status(422).send(JSON.stringify(err_response));
+          return;
+        }
         const applications = new Map();
         const month = new Map([
           ['Jan', '01'],
@@ -167,6 +176,7 @@ module.exports = app => {
           ['Nov', '11'],
           ['Dec', '12']
         ]);
+       //  console.log("-------------------------------------")
         var range = null;
         if (fields.start != null) {
           range = moment.range(fields.start, fields.end);
@@ -282,6 +292,14 @@ module.exports = app => {
           .toString('utf8')
           .split('\n')
           .filter(s => s.length > 6);
+
+        if (strings[0] == null || strings[0] == "") {
+            err_response = {
+              "message" : "Cannot analyze this file, please re-upload a valid file"
+            }
+            res.status(422).send(JSON.stringify(err_response));
+            return;
+        }
         const applications = new Map();
 
         const month = new Map([
