@@ -64,9 +64,7 @@ class UsageAnalysis extends Component {
       <div className="UsageAnalysis">
         <div className="row">
           <div className="input-field row s6">
-            <label
-              className="active"
-              htmlFor="file_name">
+            <label className="active" htmlFor="file_name">
               File Name
             </label>
             <input
@@ -81,16 +79,12 @@ class UsageAnalysis extends Component {
 
           <div className="input-field row s6">
             <div className="input-field col s6">
-              <label
-                className="active"
-                htmlFor="dateTimePicker">
+              <label className="active" htmlFor="dateTimePicker">
                 Start Date and Time (O)
               </label>
             </div>
             <div className="input-field col s6">
-              <label
-                className="active"
-                htmlFor="endTimePicker">
+              <label className="active" htmlFor="endTimePicker">
                 End Date and Time (O)
               </label>
             </div>

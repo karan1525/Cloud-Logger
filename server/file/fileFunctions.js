@@ -74,8 +74,6 @@ function file_get(userId, fileName, callback) {
   });
 }
 
-
-
 function file_rename(userId, oldFileName, newFileName, callback) {
   Log.findOneAndUpdate(
     { userId: userId, logFileName: oldFileName },

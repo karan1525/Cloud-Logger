@@ -132,14 +132,16 @@ class Upload extends Component {
           </p>
         </form>
       </div>,
-      <div align="center"
+      <div
+        align="center"
         style={{
-          marginTop: '15px',
+          marginTop: '15px'
         }}>
         <a
           href="/home"
-          className="waves-effect waves-teal btn-flat grey-text text-darken-2"
-        >Back Home</a>
+          className="waves-effect waves-teal btn-flat grey-text text-darken-2">
+          Back Home
+        </a>
       </div>
     ];
   }

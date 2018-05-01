@@ -16,9 +16,10 @@ class AnalyzePage extends Component {
             <h2 style={{ marginBottom: '50px' }}>
               CHOOSE THE TYPE OF ANALYSIS:
             </h2>
-            <div className="buttons"
+            <div
+              className="buttons"
               style={{
-                marginRight: '15px',
+                marginRight: '15px'
               }}>
               <Link
                 className="waves-effect waves-light btn-large amber darken-2"
@@ -29,9 +30,10 @@ class AnalyzePage extends Component {
                 Error Analysis
               </Link>
             </div>
-            <div className="buttons"
+            <div
+              className="buttons"
               style={{
-                marginLeft: '15px',
+                marginLeft: '15px'
               }}>
               <Link
                 className="waves-effect waves-light btn-large amber darken-2"
@@ -45,14 +47,16 @@ class AnalyzePage extends Component {
           </div>
         </div>
       </div>,
-      <div align="center"
+      <div
+        align="center"
         style={{
-          marginTop: '15px',
+          marginTop: '15px'
         }}>
         <a
           href="/home"
-          className="waves-effect waves-teal btn-flat grey-text text-darken-2"
-        >Back Home</a>
+          className="waves-effect waves-teal btn-flat grey-text text-darken-2">
+          Back Home
+        </a>
       </div>
     ];
   }
