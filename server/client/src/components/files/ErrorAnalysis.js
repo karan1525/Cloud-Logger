@@ -39,8 +39,7 @@ class ErrorAnalysis extends Component {
     post(url, formData, config)
       .then(res => {
         alert('file analyzed');
-        this.setState({ loading: true });
-        this.setState({ fileAnalysis: res.data });
+        this.setState({ loading: true, fileAnalysis: res.data });
         console.log(this.state);
       })
       .catch(err => {

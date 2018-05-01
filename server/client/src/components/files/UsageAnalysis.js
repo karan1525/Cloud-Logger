@@ -36,11 +36,10 @@ class UsageAnalysis extends Component {
       }
     };
 
-    this.setState({ loading: true });
     post(url, formData, config)
       .then(res => {
         alert('file analyzed');
-        this.setState({ fileAnalysis: res.data });
+        this.setState({ loading: true, fileAnalysis: res.data });
         console.log(this.state);
       })
       .catch(err => {
