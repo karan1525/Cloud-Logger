@@ -139,17 +139,19 @@ class FilesList extends Component {
             <input
               type="text"
               background="#e0e0e0"
+              maxLength="25"
               newfilename={this.state.newFileName}
               onChange={this.handleModalChange}
             />
             <button
               className="btn waves-effect waves-light right blue"
-              type="submit"
+              type="button"
               value="Submit">
               Rename
               <i className="material-icons right">done</i>
             </button>
             <button
+              type="button"
               className="btn waves-effect waves-light grey lighten-2 grey-text text-darken-2"
               onClick={() => this.closeModal()}>
               Cancel
