@@ -147,12 +147,13 @@ class FilesList extends Component {
             />
             <button
               className="btn waves-effect waves-light right blue"
-              type="submit"
+              type="button"
               value="Submit">
               Rename
               <i className="material-icons right">done</i>
             </button>
             <button
+              type="button"
               className="btn waves-effect waves-light grey lighten-2 grey-text text-darken-2"
               onClick={() => this.closeModal()}>
               Cancel
