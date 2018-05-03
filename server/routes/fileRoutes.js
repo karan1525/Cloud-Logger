@@ -85,12 +85,13 @@ module.exports = app => {
         fileFunctions.file_overwrite(
           fields.userId,
           files.fileUploaded.name,
-          data
-        );
+          data,
+          found =>{
+            if (found) res.status(200).send('file was overwritten');
+            else res.status(400).send('file not found'); 
+          });
       });
     });
-
-    res.status(200).send('file was overwritten');
   });
 
   //delete existing file
@@ -104,19 +105,14 @@ module.exports = app => {
         res.status(500).send('parsing failed');
       }
 
-      fileFunctions.file_delete(req.user.userId, fields.fileName);
+      fileFunctions.file_delete(req.user.userId, fields.fileName, found=>{
+        if(!found) res.status(400).send('file not found');
+        else res.status(200).send('file deleted');
+      });
 
-      res.status(200).send('file delete successful');
+      
     });
   });
-
-  // app.get('/files/:userId', function(req, res) {
-  //   fileFunctions.file_getAllFiles(req.params.userId, function(err, data) {
-  //     if (err) res.status(500).send('cannot find files');
-  //
-  //     res.status(200).send(data);
-  //   });
-  // });
 
   app.get('/api/files', requireLogin, async (req, res) => {
     fileFunctions.file_getAllFiles(req.user.userId, (err, data) => {
@@ -153,11 +149,10 @@ module.exports = app => {
           .split('\n')
           .filter(s => s.length > 6);
 
-
-        if (strings[0] == null || strings[0] == "") {
+        if (strings[0] == null || strings[0] == '') {
           err_response = {
-            "message" : "Cannot analyze this file, please re-upload a valid file"
-          }
+            message: 'Cannot analyze this file, please re-upload a valid file'
+          };
           res.status(422).send(JSON.stringify(err_response));
           return;
         }
@@ -176,7 +171,7 @@ module.exports = app => {
           ['Nov', '11'],
           ['Dec', '12']
         ]);
-       //  console.log("-------------------------------------")
+        //  console.log("-------------------------------------")
         var range = null;
         if (fields.start != null) {
           range = moment.range(fields.start, fields.end);
@@ -293,12 +288,12 @@ module.exports = app => {
           .split('\n')
           .filter(s => s.length > 6);
 
-        if (strings[0] == null || strings[0] == "") {
-            err_response = {
-              "message" : "Cannot analyze this file, please re-upload a valid file"
-            }
-            res.status(422).send(JSON.stringify(err_response));
-            return;
+        if (strings[0] == null || strings[0] == '') {
+          err_response = {
+            message: 'Cannot analyze this file, please re-upload a valid file'
+          };
+          res.status(422).send(JSON.stringify(err_response));
+          return;
         }
         const applications = new Map();
 

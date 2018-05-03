@@ -10,3 +10,7 @@
   margin: none;
   padding: none;
 }
+
+.buttons {
+  display: inline-block;
+}

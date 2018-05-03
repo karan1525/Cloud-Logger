@@ -100,18 +100,12 @@ class Upload extends Component {
   }
 
   render() {
-    return (
-      <div
-        style={{
-          marginTop: '65px',
-          marginLeft: '100px',
-          marginRight: '100px'
-        }}
-        className="Upload">
+    return [
+      <div className="Upload">
         <form action="#" onSubmit={this.handleSubmit}>
           <div className="file-field input-field">
-            <div className="btn">
-              <span>File</span>
+            <div className="btn grey">
+              <span>Choose File</span>
               <input
                 type="file"
                 size="60"
@@ -129,7 +123,7 @@ class Upload extends Component {
           </div>
           <p className="center-align">
             <button
-              className="waves-effect waves-light btn-large center"
+              className="waves-effect waves-light btn-large center blue"
               type="submit"
               value="Upload">
               Upload
@@ -137,8 +131,19 @@ class Upload extends Component {
             </button>
           </p>
         </form>
+      </div>,
+      <div
+        align="center"
+        style={{
+          marginTop: '15px'
+        }}>
+        <a
+          href="/home"
+          className="waves-effect waves-teal btn-flat grey-text text-darken-2">
+          Back Home
+        </a>
       </div>
-    );
+    ];
   }
 }
 

@@ -134,10 +134,13 @@ class FilesList extends Component {
           isOpen={this.state.isModalOpen}
           onClose={() => this.closeModal}>
           <h3 align="center">Rename {this.state.currentFileName}?</h3>
-          <p align="center">Please type a new file name.</p>
+          <p align="center">
+            <i>Please type a new file name.</i>
+          </p>
           <form onSubmit={this.handleModalSubmit}>
             <input
               type="text"
+              maxLength="25"
               background="#e0e0e0"
               maxLength="25"
               newfilename={this.state.newFileName}
