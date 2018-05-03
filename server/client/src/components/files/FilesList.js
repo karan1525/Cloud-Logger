@@ -142,7 +142,6 @@ class FilesList extends Component {
               type="text"
               maxLength="25"
               background="#e0e0e0"
-              maxLength="25"
               newfilename={this.state.newFileName}
               onChange={this.handleModalChange}
             />
