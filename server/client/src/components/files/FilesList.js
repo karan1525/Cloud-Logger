@@ -140,6 +140,7 @@ class FilesList extends Component {
           <form onSubmit={this.handleModalSubmit}>
             <input
               type="text"
+              maxLength="25"
               background="#e0e0e0"
               newfilename={this.state.newFileName}
               onChange={this.handleModalChange}
