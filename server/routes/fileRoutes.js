@@ -85,12 +85,13 @@ module.exports = app => {
         fileFunctions.file_overwrite(
           fields.userId,
           files.fileUploaded.name,
-          data
-        );
+          data,
+          found =>{
+            if (found) res.status(200).send('file was overwritten');
+            else res.status(400).send('file not found'); 
+          });
       });
     });
-
-    res.status(200).send('file was overwritten');
   });
 
   //delete existing file
@@ -104,19 +105,14 @@ module.exports = app => {
         res.status(500).send('parsing failed');
       }
 
-      fileFunctions.file_delete(req.user.userId, fields.fileName);
+      fileFunctions.file_delete(req.user.userId, fields.fileName, found=>{
+        if(!found) res.status(400).send('file not found');
+        else res.status(200).send('file deleted');
+      });
 
-      res.status(200).send('file delete successful');
+      
     });
   });
-
-  // app.get('/files/:userId', function(req, res) {
-  //   fileFunctions.file_getAllFiles(req.params.userId, function(err, data) {
-  //     if (err) res.status(500).send('cannot find files');
-  //
-  //     res.status(200).send(data);
-  //   });
-  // });
 
   app.get('/api/files', requireLogin, async (req, res) => {
     fileFunctions.file_getAllFiles(req.user.userId, (err, data) => {

@@ -11,22 +11,22 @@ function file_upload(id, fileName, file) {
   log.save();
 }
 
-function file_delete(userId, fileName) {
+function file_delete(userId, fileName, callback) {
   Log.findOneAndRemove(
     { userId: userId, logFileName: fileName },
     (err, file) => {
       if (err) throw err;
 
       if (file) {
-        console.log('file removed');
+        callback(true);
       } else {
-        console.log('file not found');
+        callback(false);
       }
     }
   );
 }
 
-function file_overwrite(userId, fileName, file) {
+function file_overwrite(userId, fileName, file, callback) {
   Log.findOneAndUpdate(
     { userId: userId, logFileName: fileName },
     { logFile: file },
@@ -34,9 +34,9 @@ function file_overwrite(userId, fileName, file) {
       if (err) throw err;
 
       if (file) {
-        console.log('file overwrote');
+        callback(true);
       } else {
-        console.log('file not found');
+        callback(false);
       }
     }
   );
