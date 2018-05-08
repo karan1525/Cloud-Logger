@@ -5,7 +5,6 @@ import '../../styling/AnalyzePage.css';
 class AnalyzePage extends Component {
   componentDidMount() {
     const receivedMessage = this.props.location.state.fileName;
-    console.log(receivedMessage);
   }
 
   render() {

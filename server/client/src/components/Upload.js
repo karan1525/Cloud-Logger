@@ -69,7 +69,6 @@ class Upload extends Component {
     const id = this.getUserId();
     formData.append('fileUploaded', file);
     formData.append('userId', id);
-    console.log(formData);
     const config = {
       headers: {
         'content-type': 'multipart/form-data'

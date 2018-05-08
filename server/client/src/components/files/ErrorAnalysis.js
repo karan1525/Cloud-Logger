@@ -71,7 +71,6 @@ class ErrorAnalysis extends Component {
       .then(res => {
         alert('file analyzed');
         this.setState({ loading: true, fileAnalysis: res.data });
-        console.log(this.state);
       })
       .catch(err => {
         if (err.response.status === 422) {

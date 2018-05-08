@@ -22,7 +22,6 @@ class Results extends Component {
           }
         }
       });
-      console.log(data_values);
       const data = {
         labels: labels_find,
         datasets: [

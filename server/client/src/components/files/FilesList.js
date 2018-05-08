@@ -34,7 +34,6 @@ class FilesList extends Component {
   handleModalSubmit(event) {
     event.preventDefault();
     this.fileRename().then(response => {
-      console.log(response.data);
       window.location.reload();
     });
   }
@@ -44,8 +43,6 @@ class FilesList extends Component {
     const oldFileName = this.state.currentFileName;
     const newFileName = this.state.newFileName;
 
-    console.log(oldFileName);
-    console.log(newFileName);
     return axios.put(url, {
       enctype: 'multipart/form-data',
       oldFileName: oldFileName,
@@ -60,7 +57,6 @@ class FilesList extends Component {
 
   handleDelete(fileName) {
     this.fileDelete(fileName).then(response => {
-      console.log(response.data);
       window.location.reload();
     });
   }
