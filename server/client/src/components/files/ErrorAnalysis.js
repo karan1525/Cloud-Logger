@@ -44,7 +44,12 @@ class ErrorAnalysis extends Component {
         console.log(this.state);
       })
       .catch(err => {
-        console.log(err.response.data);
+        if (err.response.status === 422) {
+          alert('Your file did not contain any logs. Try a different file');
+          window.location.href = '/home';
+        } else {
+          alert('Something went wrong. Try again.');
+        }
       });
   }
 
