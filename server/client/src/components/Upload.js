@@ -101,7 +101,7 @@ class Upload extends Component {
 
   render() {
     return [
-      <div className="Upload">
+      <div key="uploadForm" className="Upload">
         <form action="#" onSubmit={this.handleSubmit}>
           <div className="file-field input-field">
             <div className="btn grey">
@@ -133,6 +133,7 @@ class Upload extends Component {
         </form>
       </div>,
       <div
+        key="backButton"
         align="center"
         style={{
           marginTop: '15px'

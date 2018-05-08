@@ -10,7 +10,7 @@ class AnalyzePage extends Component {
 
   render() {
     return [
-      <div className="AnalyzePage">
+      <div key="analyzePage" className="AnalyzePage">
         <div className="container">
           <div className="center">
             <h2 style={{ marginBottom: '50px' }}>
@@ -48,6 +48,7 @@ class AnalyzePage extends Component {
         </div>
       </div>,
       <div
+        key="backHomeButton"
         align="center"
         style={{
           marginTop: '15px'
