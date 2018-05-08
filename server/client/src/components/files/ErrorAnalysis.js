@@ -1,9 +1,14 @@
+import 'react-dates/initialize';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { post } from 'axios';
-import DateTimePicker from 'react-datetime-picker';
+import moment from 'moment';
+import TimePicker from 'rc-time-picker';
+import { DateRangePicker } from 'react-dates';
+import 'rc-time-picker/assets/index.css';
 import '../../styling/ErrorAnalysis.css';
+import 'react-dates/lib/css/_datepicker.css';
 
 class ErrorAnalysis extends Component {
   constructor(props) {
@@ -12,23 +17,48 @@ class ErrorAnalysis extends Component {
       fileName: this.props.location.state.fileName,
       fileAnalysis: null,
       loading: false,
-      endDate: new Date(),
-      startDate: new Date()
+      calendarFocused: null,
+      startDate: moment(),
+      endDate: moment(),
+      startTime: moment(),
+      endTime: moment(),
+      timeAndDate: false
     };
 
-    this.onStartDateChange = this.onStartDateChange.bind(this);
-    this.onEndDateChange = this.onEndDateChange.bind(this);
     this.makeRequest = this.makeRequest.bind(this);
   }
 
-  onStartDateChange = startDate => this.setState({ startDate });
-  onEndDateChange = endDate => this.setState({ endDate });
+  onDatesChange = ({ startDate, endDate }) => {
+    this.setState({
+      startDate: startDate,
+      endDate: endDate,
+      timeAndDate: true
+    });
+  };
+
+  onFocusChange = calendarFocused => {
+    this.setState(() => ({ calendarFocused }));
+  };
+
+  onStartTimeChange = value => {
+    this.setState({ startTime: value });
+  };
+
+  onEndTimeChange = value => {
+    this.setState({ endTime: value });
+  };
 
   makeRequest() {
     const url = '/api/analyze/error';
     const fileName = this.state.fileName;
     const formData = new FormData();
     const id = this.getUserId();
+    if (this.state.timeAndDate === true) {
+      const startDateTime = this.state.startDate + ' ' + this.state.startTime;
+      const endDateTime = this.state.endDate + ' ' + this.state.endTime;
+      formData.append('start', startDateTime);
+      formData.append('end', endDateTime);
+    }
     formData.append('fileName', fileName);
     formData.append('userId', id);
     const config = {
@@ -84,34 +114,41 @@ class ErrorAnalysis extends Component {
           <div className="input-field row s6">
             <div className="input-field col s6">
               <label className="active" htmlFor="dateTimePicker">
-                Start Date and Time (O)
+                Start and End Date (0)
               </label>
             </div>
             <div className="input-field col s6">
               <label className="active" htmlFor="endTimePicker">
-                End Date and Time (O)
+                Start and End Time (O)
               </label>
             </div>
           </div>
           <div className="input-field row s6">
             <div className="input-field col s6">
-              <DateTimePicker
-                id="dateTimePicker"
-                locale="en-US"
-                isWidgetOpen="false"
-                maxDetail="second"
-                onChange={this.onStartDateChange}
-                value={this.state.startDate}
+              <DateRangePicker
+                startDate={this.state.startDate}
+                startDateId="startDate"
+                endDate={this.state.endDate}
+                endDateId="endDate"
+                onDatesChange={this.onDatesChange}
+                focusedInput={this.state.calendarFocused}
+                onFocusChange={this.onFocusChange}
+                showClearDates={true}
+                displayFormat="YYYY-MM-DD"
+                numberOfMonths={1}
+                isOutsideRange={() => false}
               />
             </div>
             <div className="input-field col s6">
-              <DateTimePicker
-                id="endTimePicker"
-                locale="en-US"
-                isWidgetOpen="false"
-                maxDetail="second"
-                onChange={this.onEndDateChange}
-                value={this.state.endDate}
+              <TimePicker
+                showSecond={true}
+                onChange={this.onStartTimeChange}
+                style={{ width: '100px', marginRight: '60px' }}
+              />
+              <TimePicker
+                showSecond={true}
+                onChange={this.onEndTimeChange}
+                style={{ width: '100px', marginLeft: '30px' }}
               />
             </div>
           </div>
