@@ -7,6 +7,7 @@ class Results extends Component {
   render() {
     var arr = _.values(this.props.location.state.fileAnalysis);
     if (typeof arr !== undefined && arr.length > 0) {
+      console.log(arr);
       var labels_find = Object.keys(arr[0]);
       var item_lenght = labels_find.length;
       var data_values = [];
@@ -22,6 +23,27 @@ class Results extends Component {
           }
         }
       });
+
+      var sum = 0;
+      for (var n in data_values) {
+        sum += data_values[n];
+      }
+
+      if (sum === 0) {
+        return (
+          <div>
+            <h2 className="center" style={{ color: 'white' }}>
+              No Data to Display
+            </h2>
+            <div className="center">
+              <Link to="/home" className="btn waves-effect waves-light blue">
+                Return Home
+              </Link>
+            </div>
+          </div>
+        );
+      }
+
       const data = {
         labels: labels_find,
         datasets: [
