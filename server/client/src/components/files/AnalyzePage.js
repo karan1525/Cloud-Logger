@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 import '../../styling/AnalyzePage.css';
 
 class AnalyzePage extends Component {
-  componentDidMount() {
-    const receivedMessage = this.props.location.state.fileName;
-  }
-
   render() {
     return [
       <div key="analyzePage" className="AnalyzePage">
