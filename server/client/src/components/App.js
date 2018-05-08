@@ -20,12 +20,14 @@ class App extends Component {
 
   privateRoutes() {
     return (
-      <Route exact path="/upload" component={Upload} />,
-      <Route exact path="/analyze" component={AnalyzePage} />,
-      <Route exact path="/errorAnalysis" component={ErrorAnalysis} />,
-      <Route exact path="/usageAnalysis" component={UsageAnalysis} />,
-      <Route exact path="/results" component={Results} />,
-      <Route path="/home" component={Home} />
+      <div>
+        <Route exact path="/upload" component={Upload} />
+        <Route exact path="/analyze" component={AnalyzePage} />
+        <Route exact path="/errorAnalysis" component={ErrorAnalysis} />
+        <Route exact path="/usageAnalysis" component={UsageAnalysis} />
+        <Route exact path="/results" component={Results} />
+        <Route path="/home" component={Home} />
+      </div>
     );
   }
 
