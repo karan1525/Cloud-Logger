@@ -75,13 +75,6 @@ class Upload extends Component {
         'content-type': 'multipart/form-data'
       }
     };
-    /**
-        ** testing purposes
-        ***use this loop to print out what's inside of formData
-       for (var key of formData.entries()){
-        console.log(key[0] + ', ' + key[1]);
-       }
-       **/
 
     post(url, formData, config)
       .then(res => {
