@@ -149,7 +149,7 @@ class FilesList extends Component {
             </button>
             <button
               className="btn waves-effect waves-light grey lighten-2 grey-text text-darken-2"
-              onInput={() => this.closeModal()}>
+              onClick={() => this.closeModal()}>
               Cancel
               <i className="material-icons right">cancel</i>
             </button>

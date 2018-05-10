@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "axios-progress-bar": "^1.2.0",
     "better-react-spinkit": "^2.0.4",
     "chart.js": "^2.7.2",
     "jest": "^22.4.2",

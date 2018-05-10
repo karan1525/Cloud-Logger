@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { post } from 'axios';
+import { loadProgressBar } from 'axios-progress-bar';
+import 'axios-progress-bar/dist/nprogress.css';
 import '../styling/Upload.css';
 
 class Upload extends Component {
@@ -75,16 +77,20 @@ class Upload extends Component {
       }
     };
 
+    loadProgressBar(config);
+
     post(url, formData, config)
       .then(res => {
         alert('file successfully uploaded');
-        window.location.href = '/home';
+        setTimeout(function() {
+          window.location.href = '/home';
+        }, 1200);
       })
       .catch(err => {
         if (err.response.data === 'user has reached a max limit') {
           alert('you have reached your max file limit');
         } else if (err.response.data === 'fileName already exist') {
-          alert('file name already exist');
+          alert('file name already exists');
         } else {
           alert('something went wrong! please try again!');
         }
