@@ -137,7 +137,7 @@ class UsageAnalysis extends Component {
                 focusedInput={this.state.calendarFocused}
                 onFocusChange={this.onFocusChange}
                 showClearDates={true}
-                displayFormat="YYYY-MM-DD"
+                displayFormat="MM-DD-YYYY"
                 numberOfMonths={1}
                 isOutsideRange={() => false}
               />

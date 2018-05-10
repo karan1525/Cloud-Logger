@@ -1,0 +1,12 @@
+.Results {
+  text-align: center;
+}
+
+.Results h2 {
+  color: white;
+  font-family: 'Roboto Condensed Light Italic';
+  color: whitesmoke;
+  font-size: 3.5em;
+  margin: none;
+  padding: none;
+}

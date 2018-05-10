@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
+import '../../styling/Results.css';
+
 
 class Results extends Component {
   render() {
@@ -49,25 +51,29 @@ class Results extends Component {
         datasets: [
           {
             label: 'Analysis Results',
-            backgroundColor: 'rgba(255,99,132,0.75)',
-            borderColor: 'rgba(0,0,0,1)',
+            backgroundColor: '#ff8f00',
+            borderColor: '#ff6f00',
             borderWidth: 3,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'black',
+            hoverBackgroundColor: '#fff8e1',
+            hoverBorderColor: '#ffecb3',
             data: data_values
           }
         ]
       };
 
       return (
-        <div style={{ marginTop: '30px' }}>
-          <h2 className="center" style={{ color: 'white' }}>
+        <div style={{
+          marginTop: '30px',
+          marginLeft: '50px',
+          marginRight: '50px'
+        }}>
+          <h2 className="center" style={{ color: 'white'}}>
             Results
           </h2>
           <Bar
             data={data}
             width={100}
-            height={50}
+            height={100}
             options={{
               maintainAspectRatio: false,
               legend: {
@@ -77,16 +83,26 @@ class Results extends Component {
                 }
               },
               scales: {
-                xAxes: [
-                  {
+                xAxes: [{
                     ticks: {
                       fontColor: 'white',
                       fontSize: 14,
                       fontStyle: 'normal',
                       beginAtZero: true
+                    },
+                    gridLines: {
+                      color: 'white'
                     }
+                  }],
+
+                yAxes: [{
+                  ticks: {
+                    fontColor: 'white',
+                  },
+                  gridLines: {
+                    color: 'white'
                   }
-                ]
+                }]
               }
             }}
           />
