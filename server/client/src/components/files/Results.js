@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import '../../styling/Results.css';
 
-
 class Results extends Component {
   render() {
     var arr = _.values(this.props.location.state.fileAnalysis);
@@ -62,12 +61,13 @@ class Results extends Component {
       };
 
       return (
-        <div style={{
-          marginTop: '30px',
-          marginLeft: '50px',
-          marginRight: '50px'
-        }}>
-          <h2 className="center" style={{ color: 'white'}}>
+        <div
+          style={{
+            marginTop: '30px',
+            marginLeft: '50px',
+            marginRight: '50px'
+          }}>
+          <h2 className="center" style={{ color: 'white' }}>
             Results
           </h2>
           <Bar
@@ -83,7 +83,8 @@ class Results extends Component {
                 }
               },
               scales: {
-                xAxes: [{
+                xAxes: [
+                  {
                     ticks: {
                       fontColor: 'white',
                       fontSize: 14,
@@ -93,16 +94,19 @@ class Results extends Component {
                     gridLines: {
                       color: 'white'
                     }
-                  }],
-
-                yAxes: [{
-                  ticks: {
-                    fontColor: 'white',
-                  },
-                  gridLines: {
-                    color: 'white'
                   }
-                }]
+                ],
+
+                yAxes: [
+                  {
+                    ticks: {
+                      fontColor: 'white'
+                    },
+                    gridLines: {
+                      color: 'white'
+                    }
+                  }
+                ]
               }
             }}
           />

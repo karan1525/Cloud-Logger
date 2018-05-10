@@ -5,7 +5,6 @@ import FilesList from './files/FilesList';
 import { ThreeBounce } from 'better-react-spinkit';
 import '../styling/Home.css';
 
-
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +19,7 @@ class Home extends Component {
   }
 
   buttonCheck() {
-    if (this.props.files.length != 2) {
+    if (this.props.files.length !== 2) {
       return (
         <a href="/upload" className="waves-effect waves-light btn-large blue">
           New File
@@ -50,7 +49,6 @@ class Home extends Component {
     ];
   }
 }
-
 
 function mapStateToProps({ files }) {
   return { files };
