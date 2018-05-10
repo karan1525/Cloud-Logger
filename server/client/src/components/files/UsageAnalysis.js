@@ -6,6 +6,8 @@ import { post } from 'axios';
 import moment from 'moment';
 import TimePicker from 'rc-time-picker';
 import { DateRangePicker } from 'react-dates';
+import { loadProgressBar } from 'axios-progress-bar';
+import 'axios-progress-bar/dist/nprogress.css';
 import 'rc-time-picker/assets/index.css';
 import '../../styling/UsageAnalysis.css';
 import 'react-dates/lib/css/_datepicker.css';
@@ -66,6 +68,8 @@ class UsageAnalysis extends Component {
         'content-type': 'multipart/form-data'
       }
     };
+
+    loadProgressBar(config);
 
     post(url, formData, config)
       .then(res => {

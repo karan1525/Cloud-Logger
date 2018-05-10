@@ -15,3 +15,7 @@
   margin-bottom: 10px;
   align-items: center;
 }
+
+#nprogress .bar {
+  background: red !important;
+}
