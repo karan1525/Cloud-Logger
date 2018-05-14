@@ -157,7 +157,7 @@ class UsageAnalysis extends Component {
           </div>
           <div
             style={{
-              marginTop: '300px'
+              marginTop: '400px'
             }}>
             <button
               className="btn waves-effect waves-light right blue"
