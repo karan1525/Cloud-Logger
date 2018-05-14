@@ -7,10 +7,36 @@ import Header from './Header';
 import Landing from './Landing';
 import Home from './Home';
 import Upload from './Upload';
+import AnalyzePage from './files/AnalyzePage';
+import ErrorAnalysis from './files/ErrorAnalysis';
+import UsageAnalysis from './files/UsageAnalysis';
+import Results from './files/Results';
+import NotFoundPage from './NotFoundPage';
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
+  }
+
+  privateRoutes() {
+    return (
+      <div>
+        <Route exact path="/upload" component={Upload} />
+        <Route exact path="/analyze" component={AnalyzePage} />
+        <Route exact path="/errorAnalysis" component={ErrorAnalysis} />
+        <Route exact path="/usageAnalysis" component={UsageAnalysis} />
+        <Route exact path="/results" component={Results} />
+        <Route path="/home" component={Home} />
+      </div>
+    );
+  }
+
+  getComponentToDisplay() {
+    if (window.location.pathname === '/') {
+      return <Route exact path="/" component={Landing} />;
+    } else {
+      return <NotFoundPage />;
+    }
   }
 
   render() {
@@ -19,9 +45,10 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Header />
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/upload" component={Upload} />
-            <Route path="/home" component={Home} />
+            {/* <Route exact path="/" component={Landing} /> */}
+            {this.props.auth
+              ? this.privateRoutes()
+              : this.getComponentToDisplay()}
           </div>
         </BrowserRouter>
       </div>
@@ -29,4 +56,8 @@ class App extends Component {
   }
 }
 
-export default connect(null, actions)(App);
+function mapStateToProps({ auth }) {
+  return { auth };
+}
+
+export default connect(mapStateToProps, actions)(App);

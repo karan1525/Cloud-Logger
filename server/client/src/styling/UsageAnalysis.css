@@ -1,4 +1,4 @@
-.Upload {
+.UsageAnalysis {
   margin: 0 auto;
   text-align: center;
   box-sizing: border-box;
@@ -9,9 +9,11 @@
   margin-top: 50px;
 }
 
-.Upload h2 {
-  color: white;
-  font-family: monospace;
+.UsageAnalysis label {
+  width: auto;
+  font-size: 20px;
+  margin-bottom: 10px;
+  align-items: center;
 }
 
 #nprogress .bar {

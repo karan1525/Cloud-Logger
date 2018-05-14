@@ -3,6 +3,8 @@ import RenameModal from './RenameModal';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { fetchFiles } from '../../actions';
+import { Link } from 'react-router-dom';
+import { ThreeBounce } from 'better-react-spinkit';
 
 class FilesList extends Component {
   constructor(props) {
@@ -10,12 +12,15 @@ class FilesList extends Component {
     this.state = {
       isModalOpen: false,
       currentFileName: null,
-      newFileName: null
+      newFileName: null,
+      fetching: true
     };
   }
 
   componentDidMount() {
-    this.props.fetchFiles();
+    this.props.fetchFiles().then(() => {
+      this.setState({ fetching: false });
+    });
 
     this.handleModalChange = this.handleModalChange.bind(this);
     this.handleModalSubmit = this.handleModalSubmit.bind(this);
@@ -29,7 +34,6 @@ class FilesList extends Component {
   handleModalSubmit(event) {
     event.preventDefault();
     this.fileRename().then(response => {
-      console.log(response.data);
       window.location.reload();
     });
   }
@@ -39,9 +43,8 @@ class FilesList extends Component {
     const oldFileName = this.state.currentFileName;
     const newFileName = this.state.newFileName;
 
-    console.log(oldFileName);
-    console.log(newFileName);
     return axios.put(url, {
+      enctype: 'multipart/form-data',
       oldFileName: oldFileName,
       newFileName: newFileName
     });
@@ -54,7 +57,6 @@ class FilesList extends Component {
 
   handleDelete(fileName) {
     this.fileDelete(fileName).then(response => {
-      console.log(response.data);
       window.location.reload();
     });
   }
@@ -77,8 +79,8 @@ class FilesList extends Component {
                 <span className="card-title">{file.logFileName}</span>
                 <p>
                   I am a log file that you have uploaded. If you'd like to
-                  either rename, or delete me, please click one of the links
-                  below.
+                  either rename, delete or analyze me, please click one of the
+                  links below.
                 </p>
               </div>
               <div className="card-action">
@@ -92,7 +94,14 @@ class FilesList extends Component {
                   onClick={() => this.handleDelete(file.logFileName)}>
                   Delete
                 </a>
-                <a style={{ cursor: 'pointer' }}>Analyze</a>
+                <Link
+                  to={{
+                    pathname: '/analyze',
+                    state: { fileName: file.logFileName }
+                  }}
+                  style={{ cursor: 'pointer' }}>
+                  Analyze
+                </Link>
               </div>
             </div>
           </div>
@@ -100,31 +109,46 @@ class FilesList extends Component {
       );
     });
   }
-
   render() {
     return [
-      <div key="filesRender">{this.renderFiles()}</div>,
+      <div key="filesRender">
+        {this.state.fetching ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
+            <ThreeBounce size={40} timingFunction="ease-in" color="#ffffff" />
+          </div>
+        ) : (
+          this.renderFiles()
+        )}
+      </div>,
       <div key="renameModal">
         <RenameModal
           isOpen={this.state.isModalOpen}
           onClose={() => this.closeModal}>
-          <h3>Rename {this.state.currentFileName}?</h3>
-          <p>Please submit a new name for this file. </p>
+          <h3 align="center">Rename {this.state.currentFileName}?</h3>
+          <p align="center">
+            <i>Please type a new file name.</i>
+          </p>
           <form onSubmit={this.handleModalSubmit}>
             <input
               type="text"
+              maxLength="25"
+              background="#e0e0e0"
               newfilename={this.state.newFileName}
-              onChange={this.handleModalChange}
+              onBlur={this.handleModalChange}
             />
             <button
-              className="btn waves-effect waves-light left"
+              className="btn waves-effect waves-light right blue"
               type="submit"
               value="Submit">
-              Submit
+              Rename
               <i className="material-icons right">done</i>
             </button>
             <button
-              className="btn waves-effect waves-light right red"
+              className="btn waves-effect waves-light grey lighten-2 grey-text text-darken-2"
               onClick={() => this.closeModal()}>
               Cancel
               <i className="material-icons right">cancel</i>
@@ -135,9 +159,7 @@ class FilesList extends Component {
     ];
   }
 }
-
 function mapStateToProps({ files }) {
   return { files };
 }
-
 export default connect(mapStateToProps, { fetchFiles })(FilesList);

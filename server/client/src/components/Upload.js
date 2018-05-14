@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { post } from 'axios';
+import { loadProgressBar } from 'axios-progress-bar';
+import 'axios-progress-bar/dist/nprogress.css';
 import '../styling/Upload.css';
 
 class Upload extends Component {
@@ -28,20 +30,38 @@ class Upload extends Component {
     this.setState({ file: event.target.files[0] });
   }
 
+  bytesToSize(bytes) {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) return 'n/a';
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    if (i === 0) return `${bytes} ${sizes[i]})`;
+    return `${(bytes / 1024 ** i).toFixed(1)} ${sizes[i]}`;
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     var file = this.state.file;
-    var filename = this.state.file.name;
-    var ext = filename.split('.').pop();
-    if (ext !== 'txt') {
-      alert(
-        'Sorry, ' +
-          ext +
-          ' files are not accepted. Accepted files are txt only.'
-      );
+    if (file) {
+      var filename = this.state.file.name;
+      const fileSize = file.size;
+      var ext = filename.split('.').pop();
+      if (ext !== 'txt') {
+        alert(
+          'Sorry, ' +
+            ext +
+            ' files are not accepted. Accepted files are txt only.'
+        );
+      } else if (fileSize > 16841924) {
+        alert(
+          'Sorry. File size must be less than 16MB. Your file is: ' +
+            this.bytesToSize(fileSize)
+        );
+      } else {
+        this.fileUpload(file);
+        alert('A file was submitted: ' + filename);
+      }
     } else {
-      this.fileUpload(file);
-      alert('A file was submitted: ' + filename);
+      alert('Please select a file to upload');
     }
   }
 
@@ -56,43 +76,34 @@ class Upload extends Component {
         'content-type': 'multipart/form-data'
       }
     };
-    /**
-        ** testing purposes
-        ***use this loop to print out what's inside of formData
-       for (var key of formData.entries()){
-        console.log(key[0] + ', ' + key[1]);
-       }
-       **/
+
+    loadProgressBar(config);
 
     post(url, formData, config)
       .then(res => {
         alert('file successfully uploaded');
+        setTimeout(function() {
+          window.location.href = '/home';
+        }, 1200);
       })
       .catch(err => {
         if (err.response.data === 'user has reached a max limit') {
           alert('you have reached your max file limit');
         } else if (err.response.data === 'fileName already exist') {
-          alert('file name already exist');
+          alert('file name already exists');
         } else {
           alert('something went wrong! please try again!');
         }
       });
-    window.location.href = '/home';
   }
 
   render() {
-    return (
-      <div
-        style={{
-          marginTop: '65px',
-          marginLeft: '100px',
-          marginRight: '100px'
-        }}
-        className="Upload">
+    return [
+      <div key="uploadForm" className="Upload">
         <form action="#" onSubmit={this.handleSubmit}>
           <div className="file-field input-field">
-            <div className="btn">
-              <span>File</span>
+            <div className="btn grey">
+              <span>Choose File</span>
               <input
                 type="file"
                 size="60"
@@ -110,7 +121,7 @@ class Upload extends Component {
           </div>
           <p className="center-align">
             <button
-              className="waves-effect waves-light btn-large center"
+              className="waves-effect waves-light btn-large center blue"
               type="submit"
               value="Upload">
               Upload
@@ -118,8 +129,20 @@ class Upload extends Component {
             </button>
           </p>
         </form>
+      </div>,
+      <div
+        key="backButton"
+        align="center"
+        style={{
+          marginTop: '15px'
+        }}>
+        <a
+          href="/home"
+          className="waves-effect waves-teal btn-flat grey-text text-darken-2">
+          Back Home
+        </a>
       </div>
-    );
+    ];
   }
 }
 
