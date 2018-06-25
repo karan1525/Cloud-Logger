@@ -88,7 +88,7 @@ module.exports = app => {
           data,
           found =>{
             if (found) res.status(200).send('file was overwritten');
-            else res.status(400).send('file not found'); 
+            else res.status(400).send('file not found');
           });
       });
     });
@@ -110,7 +110,7 @@ module.exports = app => {
         else res.status(200).send('file deleted');
       });
 
-      
+
     });
   });
 
