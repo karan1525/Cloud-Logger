@@ -63,3 +63,6 @@ typings/
 # Idea workspace files
 /.idea/
 .idea/workspace.xml
+
+# Keys
+dev.js
