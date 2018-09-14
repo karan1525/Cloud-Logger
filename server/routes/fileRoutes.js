@@ -86,10 +86,11 @@ module.exports = app => {
           fields.userId,
           files.fileUploaded.name,
           data,
-          found =>{
+          found => {
             if (found) res.status(200).send('file was overwritten');
             else res.status(400).send('file not found');
-          });
+          }
+        );
       });
     });
   });
@@ -105,12 +106,10 @@ module.exports = app => {
         res.status(500).send('parsing failed');
       }
 
-      fileFunctions.file_delete(req.user.userId, fields.fileName, found=>{
-        if(!found) res.status(400).send('file not found');
+      fileFunctions.file_delete(req.user.userId, fields.fileName, found => {
+        if (!found) res.status(400).send('file not found');
         else res.status(200).send('file deleted');
       });
-
-
     });
   });
 
